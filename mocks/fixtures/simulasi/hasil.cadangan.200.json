@@ -1,0 +1,5 @@
+{ "simulasi_id": "sim-bak-009", "run_id": "run-20261013-1800", "sumber": "cadangan",
+  "alasan_cadangan": "model_tidak_tersedia", "kedaluwarsa": true,
+  "dibuat_pada": "2026-10-13T18:05:00Z",
+  "parameter": { "curah_hujan_mm": 150, "durasi_jam": 6 },
+  "hasil": { "luas_genangan_ha": 398.0, "desa_terdampak": 11 } }

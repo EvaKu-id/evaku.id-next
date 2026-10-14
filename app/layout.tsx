@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { MswProvider } from "@/components/msw-provider";
+import Navbar from "./navbar/page";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,15 +28,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body className="p-4 flex min-h-full flex-col">
-        <MswProvider>
-          <ThemeProvider
-          attribute="class"  
-          defaultTheme="system"
-          enableSystem
-        >
-        {children}
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <div className="pb-12">
+          <Navbar />
+          </div>
+          <MswProvider>{children}</MswProvider>
         </ThemeProvider>
-        </MswProvider>
       </body>
     </html>
   );

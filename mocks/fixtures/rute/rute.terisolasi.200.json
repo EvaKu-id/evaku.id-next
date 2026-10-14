@@ -1,0 +1,2 @@
+{ "desa_id": "ds-002", "tujuan_id": "ev-101", "mode": "perahu", "jarak_m": 650, "durasi_menit": 10,
+  "geometri": { "type": "LineString", "coordinates": [[110.4620, -6.9605], [110.4601, -6.9612]] } }

@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "dev:mock": "NEXT_PUBLIC_API_MOCKING=enabled next dev",
     "start": "next start",
     "lint": "eslint"
   },
@@ -20,6 +21,7 @@
     "lucide-react": "^1.56.0",
     "maplibre-gl": "^6.14.0",
     "next": "16.4.0",
+    "next-theme": "^0.1.5",
     "next-themes": "^0.4.6",
     "openapi-fetch": "^0.17.0",
     "openapi-typescript": "^7.13.0",
@@ -34,6 +36,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/turbopack": "^4",
+    "@types/bun": "^1.4.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",

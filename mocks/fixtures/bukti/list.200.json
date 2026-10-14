@@ -1,15 +1,1 @@
-{
-  "data": [
-    {
-      "id": "bkt-001",
-      "judul": "Bukti contoh 1",
-      "tanggal": "2026-10-01T08:00:00Z"
-    },
-    {
-      "id": "bkt-002",
-      "judul": "Bukti contoh 2",
-      "tanggal": "2026-10-02T09:30:00Z"
-    }
-  ],
-  "total": 2
-}
+{ "total": 0, "data": [] }
