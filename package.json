@@ -12,6 +12,7 @@
     "@deck.gl/core": "^9.4.0",
     "@deck.gl/layers": "^9.4.0",
     "@deck.gl/mapbox": "^9.4.0",
+    "@protomaps/basemaps": "^5.7.2",
     "@supabase/ssr": "^0.12.7",
     "@supabase/supabase-js": "^2.117.3",
     "@tanstack/react-query": "^5.104.2",
@@ -19,6 +20,7 @@
     "lucide-react": "^1.56.0",
     "maplibre-gl": "^6.14.0",
     "next": "16.4.0",
+    "next-themes": "^0.4.6",
     "openapi-fetch": "^0.17.0",
     "openapi-typescript": "^7.13.0",
     "pmtiles": "^4.5.0",
@@ -37,6 +39,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.0",
+    "msw": "^3.0.3",
     "postcss": "^8.5.30",
     "tailwindcss": "^4",
     "typescript": "^5"
@@ -49,5 +52,10 @@
   "trustedDependencies": [
     "sharp",
     "unrs-resolver"
-  ]
+  ],
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }

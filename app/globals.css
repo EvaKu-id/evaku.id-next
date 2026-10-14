@@ -1,15 +1,26 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
+@custom-variant dark (&:where(.dark, .dark *));
 
 
 :root {
   --background: #F1F5F9;
-  --foreground: #FFFFFF;
+  --foreground: #0F172A;
   --footer-background: #071B30;
   --header-background: #0B2A4A;
+  --card: #FFFFFF;
   --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
   --font-body: 'Inter', system-ui, sans-serif;
   --font-data: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+.dark {
+  color-scheme: dark;
+  --background: #0F172A;
+  --foreground: #E2E8F0;
+  --footer-background: #020617;
+  --header-background: #E2E8F0;
+  --card: #1e293b;
 }
 
 @theme inline {
@@ -19,20 +30,8 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #F1F5F9;
-    --foreground: #FFFFFF;
-    --footer-background: #071B30;
-    --header-background: #0B2A4A;
-    --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
-    --font-body: 'Inter', system-ui, sans-serif;
-    --font-data: 'JetBrains Mono', ui-monospace, monospace;
-  }
-}
-
 body {
   background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--header-background);
+  font-family: var(--font-body);
 }
