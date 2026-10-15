@@ -1,0 +1,7 @@
+{ "desa_id": "ds-001", "nama": "Trimulyo", "kecamatan": "Genuk", "risiko": "tinggi",
+  "terisolasi": false, "populasi": 5200,
+  "titik_evakuasi": [
+    { "id": "ev-001", "nama": "SDN Trimulyo 01", "jenis": "sekolah", "lat": -6.9501, "lng": 110.4802, "kapasitas": 400, "dapat_dijangkau_darat": true },
+    { "id": "ev-002", "nama": "Balai Desa Trimulyo", "jenis": "balai_desa", "lat": -6.9523, "lng": 110.4851, "kapasitas": 250, "dapat_dijangkau_darat": true },
+    { "id": "ev-003", "nama": "Masjid Al-Hidayah", "jenis": "masjid", "lat": -6.9488, "lng": 110.4770, "kapasitas": 300, "dapat_dijangkau_darat": true }
+  ] }

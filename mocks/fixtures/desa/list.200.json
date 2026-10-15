@@ -1,0 +1,4 @@
+{ "run_id": "run-20261014-0600", "total": 2, "data": [
+  { "desa_id": "ds-001", "nama": "Trimulyo", "kecamatan": "Genuk", "risiko": "tinggi", "terisolasi": false, "populasi": 5200 },
+  { "desa_id": "ds-002", "nama": "Tambakrejo", "kecamatan": "Gayamsari", "risiko": "tinggi", "terisolasi": true, "populasi": 3100 }
+] }

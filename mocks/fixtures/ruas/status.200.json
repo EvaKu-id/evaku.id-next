@@ -1,0 +1,17 @@
+{
+    "run_id": "run-20261014-0600", 
+    "total": 2, 
+    "data": [
+     {  "ruas_id": "rs-001",
+        "nama": "Jl. Raya Genuk", 
+        "status": "tergenang", 
+        "kedalaman_cm": 35, 
+        "dapat_dilalui": false 
+    },
+    {   "ruas_id": "rs-002",
+        "nama": "Jl. Kaligawe", 
+        "status": "aman", 
+        "kedalaman_cm": 0, 
+        "dapat_dilalui": true 
+    }] 
+}

@@ -1,0 +1,5 @@
+{ "simulasi_id": "sim-001", "run_id": "run-20261014-0600", "sumber": "model",
+  "dibuat_pada": "2026-10-14T06:05:00Z",
+  "parameter": { "curah_hujan_mm": 150, "durasi_jam": 6 },
+  "hasil": { "luas_genangan_ha": 420.5, "desa_terdampak": 12 } 
+}

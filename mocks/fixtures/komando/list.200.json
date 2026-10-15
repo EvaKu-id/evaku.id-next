@@ -1,0 +1,7 @@
+{
+  "total": 2,
+  "data": [
+    { "id": "kmd-001", "teks": "Evakuasi warga Tambakrejo ke dermaga", "status": "selesai", "dibuat_pada": "2026-10-14T05:30:00Z" },
+    { "id": "kmd-002", "teks": "Cek ketinggian air Jl. Kaligawe", "status": "berjalan", "dibuat_pada": "2026-10-14T06:10:00Z" }
+  ]
+}

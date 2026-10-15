@@ -1,0 +1,7 @@
+{ "desa_id": "ds-002", "nama": "Tambakrejo", "kecamatan": "Gayamsari", "risiko": "tinggi",
+  "terisolasi": true, "akses_darat": false, "populasi": 3100,
+  "titik_evakuasi": [
+    { "id": "ev-101", "nama": "Dermaga Tambakrejo", "jenis": "titik_perahu", "lat": -6.9612, "lng": 110.4601, "kapasitas": 120, "dapat_dijangkau_darat": false },
+    { "id": "ev-102", "nama": "SDN Tambakrejo 02", "jenis": "sekolah", "lat": -6.9630, "lng": 110.4650, "kapasitas": 350, "dapat_dijangkau_darat": false },
+    { "id": "ev-103", "nama": "Balai RW 05", "jenis": "balai_desa", "lat": -6.9601, "lng": 110.4632, "kapasitas": 200, "dapat_dijangkau_darat": false }
+  ] }
