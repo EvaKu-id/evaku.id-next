@@ -223,15 +223,7 @@ Mensimulasikan ulang status dengan memberlakukan koreksi manual ruas jalan.
 
 ## 4. Webhook & Callback Internal
 
-### 4.1 Telegram Webhook
-Endpoint yang digunakan oleh API Bot Telegram untuk meneruskan update chat dari pengguna (perintah mulai, langganan peringatan).
-
-- **Endpoint:** `POST /api/telegram`
-- **Header Khusus:** `X-Telegram-Bot-Api-Secret-Token` (Wajib, diverifikasi dengan fungsi waktu konstan)
-- **Request Body:** Struktur update standar Telegram Bot API.
-- **Response:** `200 OK` (Cepat, dikembalikan tanpa payload berarti agar webhook tidak timeout).
-
-### 4.2 Callback Pipeline Complete
+### 4.1 Callback Pipeline Complete
 Endpoint untuk menginformasikan Next.js bahwa pipeline AI/ML telah selesai memasukkan data (run baru) ke database, memicu revalidasi cache, dan pengiriman pesan ke Telegram.
 
 - **Endpoint:** `POST /api/pipeline/complete`

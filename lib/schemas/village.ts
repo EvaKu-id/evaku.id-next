@@ -55,5 +55,4 @@ export const villageForecastListSchema = z.array(villageForecastSchema);
 export type VillageStatus = z.infer<typeof villageStatusSchema>;
 export type VillageEvacuation = z.infer<typeof villageEvacuationSchema>;
 export type VillageDetails = z.infer<typeof villageDetailsSchema>;
-export type villageDetails = VillageDetails;
 export type VillageForecast = z.infer<typeof villageForecastSchema>;
