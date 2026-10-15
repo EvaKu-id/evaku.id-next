@@ -8,26 +8,26 @@ export class VillageNotFoundError extends Error {
     this.name = "VillageNotFoundError";
   }
 }
+
 export async function getVillagesDetail(
   villageId: string,
   runId?: string,
 ): Promise<VillageDetails> {
- const { data, error } = await supabaseAdmin.rpc("village_detail", {
-
-   p_village_id: villageId,
+  const { data, error } = await supabaseAdmin.rpc("village_detail", {
+    p_village_id: villageId,
   });
 
- if (error) {
+  if (error) {
     throw new Error(`RPC Error: ${error.message}`);
+  }
 
-   if (!data) {
+  if (!data) {
     throw new VillageNotFoundError(villageId);
   }
-}
 
- if (runId) {
+  if (runId) {
+    // function untuk mengambil sisa data lain sesuai dengan VillageDetails
+  }
 
- }
-
- return data;
+  return data;
 }
