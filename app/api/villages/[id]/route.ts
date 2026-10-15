@@ -5,7 +5,7 @@ import { apiError, IMMUTABLE_CACHE_CONTROL } from "@/lib/server/http";
 import { getVillagesDetail, VillageNotFoundError } from "@/lib/server/village";
 
 const paramsSchema = z.object({ id: z.string().min(1) });
-const querySchema = z.object({ run: z.string().min(1) });
+const querySchema = z.object({ run: z.string().min(1).optional() });
 
 export async function GET(
   req: NextRequest,
@@ -20,8 +20,9 @@ export async function GET(
     const parsedQuery = querySchema.safeParse({
       run: req.nextUrl.searchParams.get("run") ?? undefined,
     });
+    
     if (!parsedQuery.success) {
-      return apiError("BAD_REQUEST", "Query parameter run wajib diisi", 400);
+      return apiError("BAD_REQUEST", "Format query parameter run tidak valid", 400);
     }
 
     const detail = await getVillagesDetail(
