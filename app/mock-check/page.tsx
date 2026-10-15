@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 
 // Samakan dengan endpoint di kontrak KON-06
 const ENDPOINTS: { method: "GET" | "POST"; path: string }[] = [
+  { method: "GET", path: "/api/latest" },
+  { method: "GET", path: "/api/runs/run-20261015-0700/roads" },
+  { method: "GET", path: "/api/runs/run-20261015-0700/villages" },
   { method: "GET", path: "/api/run/latest" },
   { method: "GET", path: "/api/ruas/status" },
   { method: "GET", path: "/api/desa" },

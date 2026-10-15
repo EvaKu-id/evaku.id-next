@@ -1,0 +1,34 @@
+[
+  {
+    "village_id": "1371010001",
+    "name": "Lubuk Minturun",
+    "status": "fully_isolated",
+    "isolated_population": 5420,
+    "flooded_population": 1840,
+    "priority_score": 0.92
+  },
+  {
+    "village_id": "1371010002",
+    "name": "Koto Panjang Ikur Koto",
+    "status": "partially_isolated",
+    "isolated_population": 1860,
+    "flooded_population": 920,
+    "priority_score": 0.68
+  },
+  {
+    "village_id": "1371010003",
+    "name": "Air Dingin",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 430,
+    "priority_score": 0.31
+  },
+  {
+    "village_id": "1371010004",
+    "name": "Dadok Tunggul Hitam",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": null
+  }
+]

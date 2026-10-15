@@ -1,0 +1,6 @@
+[
+  { "edge_id": 71001, "status": 0, "depth_cm": 0 },
+  { "edge_id": 71002, "status": 1, "depth_cm": 12 },
+  { "edge_id": 71003, "status": 2, "depth_cm": 42 },
+  { "edge_id": 71004, "status": 3, "depth_cm": null }
+]

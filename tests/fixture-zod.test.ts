@@ -3,6 +3,7 @@ import { z } from "zod";
 import fs from "node:fs";
 import path from "node:path";
 import * as S from "@/contracts/schema"; 
+import * as PublicApi from "@/contracts/public-api";
 
 const ROOT = "mocks/fixtures";
 // tar di pasin be
@@ -30,6 +31,13 @@ const cases: Record<string, z.ZodType> = {
   "komando/analisis.422.json": S.errorResponse,
   "bukti/list.200.json": buktiListResponse,
   "bukti/list.kosong.200.json": buktiListResponse,
+  "public/latest.200.json": PublicApi.publicLatestResponse,
+  "public/latest.kosong.200.json": PublicApi.publicLatestResponse,
+  "public/roads.200.json": PublicApi.publicRoadsResponse,
+  "public/roads.kosong.200.json": PublicApi.publicRoadsResponse,
+  "public/villages.200.json": PublicApi.publicVillagesResponse,
+  "public/villages.kosong.200.json": PublicApi.publicVillagesResponse,
+  "_error/public-500.json": PublicApi.publicErrorResponse,
 };
 
 const read = (f: string) => JSON.parse(fs.readFileSync(path.join(ROOT, f), "utf8"));

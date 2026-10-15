@@ -1,0 +1,23 @@
+{
+  "radar": {
+    "run_id": "run-20261015-0700",
+    "data_time": "2026-10-15T07:00:00Z"
+  },
+  "forecasts": [
+    {
+      "run_id": "forecast-20261015-0700-24h",
+      "data_time": "2026-10-15T07:00:00Z",
+      "horizon_hours": 24
+    },
+    {
+      "run_id": "forecast-20261015-0700-48h",
+      "data_time": "2026-10-15T07:00:00Z",
+      "horizon_hours": 48
+    },
+    {
+      "run_id": "forecast-20261015-0700-72h",
+      "data_time": "2026-10-15T07:00:00Z",
+      "horizon_hours": 72
+    }
+  ]
+}
