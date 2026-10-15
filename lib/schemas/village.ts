@@ -33,10 +33,6 @@ export const villageEvacuationListSchema = z
 export const villageDetailsSchema = z.object({
   village_id: z.string(),
   name: z.string(),
-  status: z.enum(["reachable", "partially_isolated", "fully_isolated"]),
-  isolated_population: z.number().int().nonnegative(),
-  flooded_population: z.number().int().nonnegative(),
-  priority_score: z.number().nullable(),
   district: z.string(),
   regency: z.string(),
   population: z.number().int().nonnegative().nullable(),
