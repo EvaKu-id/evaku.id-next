@@ -106,3 +106,18 @@ export const metrikResponse = z.object({
   penduduk_terdampak: z.number().int().nonnegative(),
   akurasi_model: z.number().min(0).max(1),
 });
+
+export const komandoListResponse = z.object({
+  total: z.number().int().nonnegative(),
+  data: z.array(z.object({
+    id: z.string(),
+    teks: z.string(),
+    status: z.enum(["berjalan", "selesai"]),
+    dibuat_pada: waktu,
+  })),
+});
+
+export const analisisResponse = z.object({
+  label: z.string(),
+  confidence: z.number().min(0).max(1),
+});

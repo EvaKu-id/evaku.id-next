@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "../components/theme-provider";
 import { MswProvider } from "@/components/msw-provider";
 import Navbar from "./navbar/page";
+import Footer from "./footer/page"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,13 +36,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap"
         />
       </head>
-      <body className="p-4 flex min-h-full flex-col">
+      <body className="">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <div className="pb-12">
           <Navbar />
           </div>
           <MswProvider>{children}</MswProvider>
         </ThemeProvider>
+          <Footer/>
       </body>
     </html>
   );

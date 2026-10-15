@@ -4,6 +4,7 @@ import { getSkenario, type Skenario } from "./scenario";
 
 
 import errorBody from "./fixtures/_error/500.json";
+import publicErrorBody from "./fixtures/_error/public-500.json";
 
 import runNormal from "./fixtures/run/latest.200.json";
 import runCadangan from "./fixtures/run/latest.cadangan.200.json";
@@ -26,6 +27,12 @@ import buktiNormal from "./fixtures/bukti/list.200.json";
 import buktiKosong from "./fixtures/bukti/list.kosong.200.json";
 import analisis200 from "./fixtures/komando/analisis.200.json";
 import analisis422 from "./fixtures/komando/analisis.422.json";
+import publicLatest from "./fixtures/public/latest.200.json";
+import publicLatestKosong from "./fixtures/public/latest.kosong.200.json";
+import publicRoads from "./fixtures/public/roads.200.json";
+import publicRoadsKosong from "./fixtures/public/roads.kosong.200.json";
+import publicVillages from "./fixtures/public/villages.200.json";
+import publicVillagesKosong from "./fixtures/public/villages.kosong.200.json";
 
 type Variants = { normal: unknown } & Partial<Record<Skenario, unknown>>;
 
@@ -43,7 +50,21 @@ function serve(method: "get" | "post", path: string, v: Variants, delayMs = 300)
   });
 }
 
+function servePublic(path: string, v: Variants) {
+  return http.get(path, async () => {
+    await delay(ms(300));
+    const s = getSkenario();
+    if ((s as string) === "error") {
+      return HttpResponse.json(publicErrorBody, { status: 500 });
+    }
+    return HttpResponse.json((v[s] ?? v.normal) as Record<string, unknown>);
+  });
+}
+
 export const handlers = [
+  servePublic("*/api/latest", { normal: publicLatest, kosong: publicLatestKosong }),
+  servePublic("*/api/runs/:id/roads", { normal: publicRoads, kosong: publicRoadsKosong }),
+  servePublic("*/api/runs/:id/villages", { normal: publicVillages, kosong: publicVillagesKosong }),
   serve("get", "*/api/run/latest",     { normal: runNormal, cadangan: runCadangan }),
   serve("get", "*/api/ruas/status",    { normal: ruasNormal, kosong: ruasKosong }),
   serve("get", "*/api/desa",           { normal: desaNormal, kosong: desaKosong }),

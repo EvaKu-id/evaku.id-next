@@ -1,76 +1,70 @@
 import Image from "next/image";
+import { Waves } from "lucide-react";
 
-
-type AboutProps = {
-  /** Path gambar di folder public/, mis. "/about.jpg". Kosong = placeholder. */
-  imageSrc?: string;
-  imageAlt?: string;
+export const metadata = {
+  title: "Tentang Kami | Evaku.id",
+  description:
+    "Latar belakang, metodologi, dan tujuan inisiatif Evaku.id dalam membantu evakuasi banjir terarah di Indonesia.",
 };
 
-/** Placeholder: latar biru dengan garis diagonal + siluet dua orang. */
-function ImagePlaceholder() {
+export default function AboutPage() {
   return (
-    <svg
-      viewBox="0 0 600 400"
-      className="absolute inset-0 size-full"
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden="true"
-    >
-      <rect width="600" height="400" fill="#0B2A4A" fillOpacity=".14" />
-      <g fill="#F1F5F9" fillOpacity=".55">
-        <path d="M60 0h70L40 190 0 190Z" />
-        <path d="M260 0h60L230 160 190 160Z" />
-        <path d="M470 0h70L450 210 410 210Z" />
-        <path d="M560 120h40v140l-60 0Z" />
-      </g>
-      {/* orang kiri */}
-      <circle cx="270" cy="150" r="42" fill="#0B2A4A" />
-      <path d="M170 400c0-80 40-135 100-135s100 55 100 135Z" fill="#071B30" />
-      {/* orang kanan */}
-      <circle cx="400" cy="210" r="38" fill="#0B2A4A" fillOpacity=".8" />
-      <path d="M320 400c0-62 32-105 80-105s80 43 80 105Z" fill="#0B2A4A" fillOpacity=".9" />
-    </svg>
-  );
-}
-
-export default function About({ imageSrc, imageAlt = "" }: AboutProps) {
-  return (
-    <section
-      id="about"
-      className="scroll-mt-24 bg-[#F1F5F9] px-4 py-16 text-[#0B2A4A] sm:px-6 sm:py-20"
-    >
-      <div className="mx-auto grid max-w-6xl  lg:grid-cols-2 lg:gap-5">
-        <article className="flex flex-col justify-between gap- rounded-3xl bg-white p-6 shadow-[0_1px_0_rgba(11,42,74,0.04)] sm:p-9 lg:gap-16">
-          <div>
-            <p className="text-base font-semibold text-[#0B2A4A]/60">How it started</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-[1.15] tracking-tight text-[#071B30] sm:text-5xl">
-              Tujuan kami membuat ini adalah 
-            </h2>
+    <main className="min-h-screen text-[#0B2A4A] dark:text-[#E2E8F0] pb-24">
+      <section className="relative pt-12 pb-16 sm:pt-20 sm:pb-24 border-b border-[#0B2A4A]/10 dark:border-white/10">
+        <div className="mx-auto max-w-5xl px-5 sm:px-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-sky-600/20 bg-sky-50 dark:bg-sky-950/40 px-3.5 py-1.5 text-xs font-semibold tracking-wider text-sky-800 dark:text-sky-300 uppercase mb-6">
+            <Waves size={14} className="text-sky-600 dark:text-sky-400" />
+            <span>Tentang Inisiatif Evaku.id</span>
           </div>
 
-          <p className="max-w-prose text-sm leading-7 text-[#0B2A4A]/80 sm:text-[15px]">
-            Untuk mempersiapkan apa yang harus dilakukan, kapan harus evakuasi, dimana harus berlari dan rute mana yang harus di lewati dari bencana banjir menggunakan evaku.id
+          <h1 className="text-3xl sm:text-5xl lg:text-[56px] font-extrabold tracking-tight text-[#071B30] dark:text-white leading-[1.12] font-heading max-w-4xl">
+            Informasi rute yang akurat adalah pembeda antara keselamatan dan kepanikan saat banjir datang.
+          </h1>
+
+          <p className="mt-8 text-base sm:text-xl leading-relaxed text-[#0B2A4A]/75 dark:text-slate-300 max-w-3xl">
+            Evaku.id dikembangkan untuk menjawab satu persoalan mendasar di kawasan rawan genangan: saat air mulai naik, warga sering kali tidak tahu ruas jalan mana yang masih aman dilalui dan posko mana yang siap menerima pengungsi.
           </p>
-        </article>
-
-        {/* ===== Gambar + statistik ===== */}
-        <div className="flex flex-col gap-4 lg:gap-5">
-          <div className="relative aspect-[3/2] w-full overflow-hidden rounded-3xl bg-[#0B2A4A]/10">
-            {imageSrc ? (
-              <Image
-                src={imageSrc}
-                alt={imageAlt}
-                fill
-                sizes="(min-width: 1024px) 50vw, 100vw"
-                className="object-cover"
-              />
-            ) : (
-              <ImagePlaceholder />
-            )}
-          </div>
-
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section className="py-16 sm:py-20 border-b border-[#0B2A4A]/10 dark:border-white/10 bg-white/60 dark:bg-slate-900/40">
+        <div className="mx-auto max-w-5xl px-5 sm:px-8">
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            <div className="lg:col-span-6">
+              <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-[#0B2A4A]/15 dark:border-white/10 bg-slate-200 dark:bg-slate-800 shadow-md">
+                <Image
+                  src="/banjir.webp"
+                  alt="Kondisi banjir melanda pemukiman warga"
+                  fill
+                  priority
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#071B30]/80 via-transparent to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 text-xs text-white/90">
+                  <span className="font-semibold block">Dokumentasi Lapangan</span>
+                  Jalan protokol yang terputus air memaksa warga mencari rute alternatif secara mandiri.
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-xs font-bold uppercase tracking-widest text-sky-600 dark:text-sky-400">
+                Latar Belakang
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#071B30] dark:text-white leading-snug">
+                Banjir tidak hanya merendam rumah, tetapi juga memutus akses bantuan.
+              </h2>
+              <p className="text-sm sm:text-base leading-relaxed text-[#0B2A4A]/75 dark:text-slate-300">
+                Dalam banyak kejadian banjir luapan sungai atau curah hujan ekstrem di wilayah perkotaan dan cekungan, proses evakuasi kerap terhambat bukan karena ketiadaan kendaraan evakuasi, melainkan karena armada terhadang ruas jalan yang sudah terendam melebihi batas aman.
+              </p>
+              <p className="text-sm sm:text-base leading-relaxed text-[#0B2A4A]/75 dark:text-slate-300">
+                Evaku.id hadir sebagai jembatan data antara ketinggian air, jaringan jalan darat, dan kesiapan posko pengungsian agar keputusan diambil berdasarkan kondisi nyata, bukan perkiraan.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }

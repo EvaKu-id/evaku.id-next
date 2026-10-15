@@ -1,10 +1,10 @@
 # Dokumentasi API Publik EvaKu
 
-Dokumen ini mendeskripsikan antarmuka API publik EvaKu yang digunakan oleh Frontend (Web) dan layanan lainnya. Spesifikasi ini disusun berdasarkan skema validasi Zod (`lib/schemas/`) dan kontrak teknis backend (`dokumen_teknis_be.md`).
+Dokumen ini mendeskripsikan antarmuka API publik EvaKu yang digunakan oleh Frontend (Web) dan layanan lainnya. Validasi Zod untuk response `GET /api/latest`, `GET /api/runs/[id]/roads`, dan `GET /api/runs/[id]/villages` tersedia di `contracts/public-api.ts`; kontrak response model AI/ML masih menunggu `contracts/openapi.json`.
 
 ## Ketentuan Umum
 
-- **Base URL:** API dilayani dari route Next.js (`/api/...`).
+- **Base URL:** Endpoint menggunakan path `/api/...`. Di repository frontend ini, respons dummy untuk pengembangan dilayani oleh MSW; route produksi disediakan oleh backend dan belum diimplementasikan di Next.js.
 - **Format:** Semua request body dan response menggunakan format `application/json`.
 - **Batas Request (Rate Limiting):** Endpoint `/api/simulation` dan `/api/route` dibatasi per IP per menit. Melewati batas akan mengembalikan status HTTP `429 Too Many Requests` dengan header `Retry-After`.
 - **Response Error:** Semua error terprediksi menggunakan struktur standar berikut (HTTP Status sesuai dengan jenis error, misalnya 400, 401, 404, 500):

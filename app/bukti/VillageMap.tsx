@@ -13,6 +13,13 @@ type MapMode = 'h3' | 'hariH';
 const SHOW_DEBUG = true;
 
 const MAP_CENTER: [number, number] = [100.36, -0.865];
+const CARTO_API_KEY = process.env.NEXT_PUBLIC_CARTO_API_KEY;
+const CARTO_RASTER_HOSTS = [
+  'https://a.basemaps.cartocdn.com',
+  'https://b.basemaps.cartocdn.com',
+  'https://c.basemaps.cartocdn.com',
+  'https://d.basemaps.cartocdn.com',
+];
 
 function getMarkerColor(mode: MapMode, village: VillageReplayValidation) {
   if (mode === 'h3') {
@@ -65,12 +72,10 @@ export default function VillageMap({
           sources: {
             basemap: {
               type: 'raster',
-              tiles: [
-                'https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-                'https://b.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-                'https://c.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-                'https://d.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-              ],
+              tiles: CARTO_RASTER_HOSTS.map(
+                (host) =>
+                  `${host}/light_all/{z}/{x}/{y}.png${CARTO_API_KEY ? `?key=${encodeURIComponent(CARTO_API_KEY)}` : ''}`,
+              ),
               tileSize: 256,
               maxzoom: 19,
               attribution:

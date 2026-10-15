@@ -12,7 +12,7 @@ import {
 } from "maplibre-gl";
 import { BASEMAP_STYLES } from "@/lib/map-config";
 import { ensureMaplibreWorker } from "@/lib/maplibre-worker";
-import type { BasemapTheme, MapViewState } from "@/types/map";
+import type { BasemapTheme, MapViewState } from "@/lib/types/map";
 
 interface UseMapLibreOptions {
   initialView: MapViewState;
