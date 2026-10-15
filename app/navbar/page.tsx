@@ -8,6 +8,7 @@ const links = [
   { label: "About", href: "#about" },
   { label: "Bukti", href: "/bukti" },   
   { label: "Komando", href: "/komando" },
+  { label: "Map", href: "/map" },
   { label: "Resource", href: "#resource" },
 ];
 

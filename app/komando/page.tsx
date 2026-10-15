@@ -1,9 +1,5 @@
-import dynamic from 'next/dynamic';
-import Map from "@/components/map"
+import { MapView } from "@/components/map";
 
 export default function Komando() {
-  return (
-      <Map />
-  )
-  ;
+  return <MapView />;
 }
