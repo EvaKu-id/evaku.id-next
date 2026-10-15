@@ -22,6 +22,7 @@ Dokumen ini mendeskripsikan antarmuka API publik EvaKu yang digunakan oleh Front
 ## 1. Run & Status Sistem
 
 ### 1.1 Ambil Run Terbaru
+
 Mendapatkan `run_id` dari simulasi/radar dan prakiraan terbaru yang sudah dipublikasikan (`status = 'published'`).
 
 - **Endpoint:** `GET /api/latest`
@@ -48,6 +49,7 @@ Mendapatkan `run_id` dari simulasi/radar dan prakiraan terbaru yang sudah dipubl
 ## 2. Peta & Data Spasial
 
 ### 2.1 Status Ruas Jalan per Run
+
 Mendapatkan status jalan dan kedalaman genangan untuk ditampilkan di peta (lapis vektor).
 
 - **Endpoint:** `GET /api/runs/[id]/roads`
@@ -65,6 +67,7 @@ Mendapatkan status jalan dan kedalaman genangan untuk ditampilkan di peta (lapis
   ```
 
 ### 2.2 Status Desa per Run
+
 Mendapatkan ringkasan status setiap desa berdasarkan hasil komputasi run tertentu.
 
 - **Endpoint:** `GET /api/runs/[id]/villages`
@@ -86,6 +89,7 @@ Mendapatkan ringkasan status setiap desa berdasarkan hasil komputasi run tertent
   ```
 
 ### 2.3 Prakiraan Desa per Run
+
 Mendapatkan hasil prakiraan probabilitas banjir per desa dari run prakiraan.
 
 - **Endpoint:** `GET /api/runs/[id]/forecasts`
@@ -104,6 +108,7 @@ Mendapatkan hasil prakiraan probabilitas banjir per desa dari run prakiraan.
   ```
 
 ### 2.4 Detail Desa
+
 Mendapatkan informasi detail dan metrik desa, serta tiga opsi evakuasi terbaik.
 
 - **Endpoint:** `GET /api/villages/[id]`
@@ -144,9 +149,10 @@ Mendapatkan informasi detail dan metrik desa, serta tiga opsi evakuasi terbaik.
 
 ## 3. Interaksi Layanan Model (AI/ML)
 
-*Catatan: Struktur lengkap model_payload saat ini menunggu `contracts/openapi.json`. Namun `source` dipastikan tersedia pada response sebagai penanda asal data (fastapi / cache / fallback).*
+_Catatan: Struktur lengkap model_payload saat ini menunggu `contracts/openapi.json`. Namun `source` dipastikan tersedia pada response sebagai penanda asal data (fastapi / cache / fallback)._
 
 ### 3.1 Simulasi
+
 Memicu simulasi banjir berdasarkan parameter ketinggian sungai (atau skenario lain).
 
 - **Endpoint:** `POST /api/simulation`
@@ -169,6 +175,7 @@ Memicu simulasi banjir berdasarkan parameter ketinggian sungai (atau skenario la
   ```
 
 ### 3.2 Pencarian Rute
+
 Mencari rute terbaik menuju desa menggunakan model/skenario terbaru.
 
 - **Endpoint:** `POST /api/route`
@@ -191,7 +198,8 @@ Mencari rute terbaik menuju desa menggunakan model/skenario terbaru.
   }
   ```
 
-### 3.3 Kalkulasi Ulang (Recalc) - *Should Have*
+### 3.3 Kalkulasi Ulang (Recalc) - _Should Have_
+
 Mensimulasikan ulang status dengan memberlakukan koreksi manual ruas jalan.
 
 - **Endpoint:** `POST /api/recalc`
@@ -220,6 +228,7 @@ Mensimulasikan ulang status dengan memberlakukan koreksi manual ruas jalan.
 ## 4. Webhook & Callback Internal
 
 ### 4.1 Callback Pipeline Complete
+
 Endpoint untuk menginformasikan Next.js bahwa pipeline AI/ML telah selesai memasukkan data (run baru) ke database, memicu revalidasi cache, dan pengiriman pesan ke Telegram.
 
 - **Endpoint:** `POST /api/pipeline/complete`
