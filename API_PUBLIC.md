@@ -120,16 +120,12 @@ Mendapatkan informasi detail dan metrik desa, serta tiga opsi evakuasi terbaik.
     "population": 1200, // nullable
     "children_under5": 100, // nullable
     "elderly": 150, // nullable
-    "status": "reachable", // "reachable" | "partially_isolated" | "fully_isolated"
-    "isolated_population": 0,
-    "flooded_population": 0,
-    "priority_score": 0.2, // nullable
     "geom": [ [ [ [110.0, -7.0], [110.1, -7.0], ... ] ] ], // GeoJSON MultiPolygon Coordinates
     "score_breakdown": { ... }, // Obyek JSON dinamis (nullable)
     "route": { ... }, // GeoJSON LineString (nullable)
     "boat_point": { ... }, // Drop-off point (nullable)
     "evacuations": [
-      // Selalu berisi tepat 3 elemen (diurutkan berdasarkan rank: 1, 2, 3)
+      // Selalu berisi tepat 3 elemen (diurutkan berdasarkan rank: 1, 2, 3) (nullable)
       {
         "rank": 1,
         "facility_id": 987,

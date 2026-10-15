@@ -28,9 +28,11 @@ export const villageEvacuationSchema = z.object({
 
 export const villageEvacuationListSchema = z
   .array(villageEvacuationSchema)
-  .length(3);
+  .length(3).nullable();
 
-export const villageDetailsSchema = villageStatusSchema.extend({
+export const villageDetailsSchema = z.object({
+  village_id: z.string(),
+  name: z.string(),
   district: z.string(),
   regency: z.string(),
   population: z.number().int().nonnegative().nullable(),
@@ -41,7 +43,7 @@ export const villageDetailsSchema = villageStatusSchema.extend({
   route: z.object({}).passthrough().nullable(),
   boat_point: z.object({}).passthrough().nullable(),
   evacuations: villageEvacuationListSchema,
-});
+})
 
 export const villageForecastSchema = z.object({
   village_id: z.string(),
