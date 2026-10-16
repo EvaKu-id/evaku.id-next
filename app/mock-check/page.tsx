@@ -17,6 +17,7 @@ const ENDPOINTS: { method: "GET" | "POST"; path: string }[] = [
   { method: "GET", path: "/api/metrik" },
   { method: "GET", path: "/api/komando" },
   { method: "GET", path: "/api/bukti" },
+  { method: "GET", path: "/api/villages/1" },
 ];
 
 type Hasil = { key: string; status: number | "ERR"; ms: number; body: string };

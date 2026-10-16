@@ -61,7 +61,7 @@ export default function Komando() {
 
     async function loadMonitoringData() {
       try {
-        const latestResponse = await fetch("/api/villages/[id]", {
+        const latestResponse = await fetch("/api/villages/1", {
           signal: controller.signal,
         });
         if (!latestResponse.ok) throw new Error("Latest run request failed");

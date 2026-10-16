@@ -1,38 +1,50 @@
 // types.ts
 
 export interface VillageReplayValidation {
-  id: string;
+  geom: number[][][][];
   name: string;
+  elderly: number;
+  regency: string;
   district: string;
-  predH3: 'aman' | 'waspada' | 'terisolasi';
-  actualHariH: 'terjangkau' | 'sebagian' | 'terisolasi_total';
-  classification: 'True Positive' | 'True Negative' | 'False Positive' | 'False Negative';
-  popAtRisk: number;
-  actualFloodDepthCm: number;
-  evacuationRouteStatus: 'Aman & Terjangkau' | 'Terputus';
-  coordinates: [number, number];
+  population: number;
+  village_id: string;
+  children_under5: number;
+}
+export interface MetricsData {
+  dataset: string;
+  iou: number;
+  dice_f1: number;
+  precision: number;
+  recall: number;
+  baseline_otsu_iou: number;
+  peningkatan_vs_baseline_persen: number;
+  
+  // light gbm
+  wilayah: string;
+  kejadian: string;
+  debit_puncak: string;
+  pr_auc: number;
+  baseline_hujan3h_auc: number;
+  ambang_risiko_tinggi: number;
+  lead_time_peringatan_dini: string;
+  // HydrologyCalibration
+  sungai: string;
+  formula: string;
+  r_squared: number;
+  lonjakan_debit: string;
+  // FieldValidation
+  kejadianField: string;
+  status: string;
+  wilayah_terdampak: string[];
 }
 
-export interface MetricItem {
-  model: string;
-  name: string;
-  label: string;
-  value: number;
-  formattedValue: string;
-  unit?: string;
-  note: string;
-  baseline: string;
-  baselineDelta: string;
-  isHigherBetter: boolean;
-}
 
 export interface CalibrationPoint {
-  bin: string;
-  binCenter: number;
-  rawProbability: number;
-  calibratedProbability: number;
-  ideal: number;
-  sampleCount: number;
+  ambangTinggi: number;
+  ambangSedang: number;
+  skorMax: number;
+  skorMin: number;
+  catatan: string;
 }
 
 export interface LeadTimeEvalPoint {

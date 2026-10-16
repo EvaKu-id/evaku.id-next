@@ -1,19 +1,18 @@
-'use client';
+ 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import { VILLAGE_REPLAY_VALIDATION } from './data';
 import type { VillageReplayValidation } from './types';
 
 type MapMode = 'h3' | 'hariH';
+type Position = [number, number];
 
-// Set ke false setelah peta berhasil tampil.
 const SHOW_DEBUG = true;
-
-const MAP_CENTER: [number, number] = [100.36, -0.865];
+const MAP_CENTER: Position = [100.36, -0.865];
 const CARTO_API_KEY = process.env.NEXT_PUBLIC_CARTO_API_KEY;
+
 const CARTO_RASTER_HOSTS = [
   'https://a.basemaps.cartocdn.com',
   'https://b.basemaps.cartocdn.com',
@@ -21,27 +20,74 @@ const CARTO_RASTER_HOSTS = [
   'https://d.basemaps.cartocdn.com',
 ];
 
-function getMarkerColor(mode: MapMode, village: VillageReplayValidation) {
-  if (mode === 'h3') {
-    if (village.predH3 === 'terisolasi') return '#e11d48';
-    if (village.predH3 === 'waspada') return '#f59e0b';
-    return '#059669';
+function getPositions(geom: unknown): Position[] {
+  const positions: Position[] = [];
+
+  function traverse(value: unknown): void {
+    if (!Array.isArray(value)) return;
+
+    if (
+      value.length >= 2 &&
+      typeof value[0] === 'number' &&
+      typeof value[1] === 'number'
+    ) {
+      const longitude = value[0];
+      const latitude = value[1];
+
+      if (
+        Number.isFinite(longitude) &&
+        Number.isFinite(latitude) &&
+        longitude >= -180 &&
+        longitude <= 180 &&
+        latitude >= -90 &&
+        latitude <= 90
+      ) {
+        positions.push([longitude, latitude]);
+      }
+
+      return;
+    }
+
+    value.forEach(traverse);
   }
 
-  if (village.actualHariH === 'terisolasi_total') return '#e11d48';
-  if (village.actualHariH === 'sebagian') return '#f97316';
-  return '#059669';
+  traverse(geom);
+  return positions;
+}
+
+function getVillageCenter(geom: unknown): Position | null {
+  const positions = getPositions(geom);
+
+  if (positions.length === 0) return null;
+
+  const longitude =
+    positions.reduce((sum, position) => sum + position[0], 0) /
+    positions.length;
+
+  const latitude =
+    positions.reduce((sum, position) => sum + position[1], 0) /
+    positions.length;
+
+  return [longitude, latitude];
+}
+
+function getMarkerColor(mode: MapMode): string {
+  return mode === 'h3' ? '#2563eb' : '#059669';
+}
+
+interface VillageMapProps {
+  mode: MapMode;
+  villages: VillageReplayValidation[];
+  selectedVillage: VillageReplayValidation | null;
+  onSelectVillage: (village: VillageReplayValidation) => void;
 }
 
 export default function VillageMap({
   mode,
+  villages,
   selectedVillage,
   onSelectVillage,
-}: {
-  mode: MapMode;
-  selectedVillage: VillageReplayValidation;
-  onSelectVillage: (village: VillageReplayValidation) => void;
-}) {
+}: VillageMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
   const markersRef = useRef<maplibregl.Marker[]>([]);
@@ -57,7 +103,7 @@ export default function VillageMap({
     selectRef.current = onSelectVillage;
   }, [onSelectVillage]);
 
-  // 1) Inisialisasi peta.
+  // 1. Inisialisasi peta.
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -74,7 +120,11 @@ export default function VillageMap({
               type: 'raster',
               tiles: CARTO_RASTER_HOSTS.map(
                 (host) =>
-                  `${host}/light_all/{z}/{x}/{y}.png${CARTO_API_KEY ? `?key=${encodeURIComponent(CARTO_API_KEY)}` : ''}`,
+                  `${host}/light_all/{z}/{x}/{y}.png${
+                    CARTO_API_KEY
+                      ? `?key=${encodeURIComponent(CARTO_API_KEY)}`
+                      : ''
+                  }`,
               ),
               tileSize: 256,
               maxzoom: 19,
@@ -82,55 +132,65 @@ export default function VillageMap({
                 '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
             },
           },
-          layers: [{ id: 'basemap', type: 'raster', source: 'basemap' }],
+          layers: [
+            {
+              id: 'basemap',
+              type: 'raster',
+              source: 'basemap',
+            },
+          ],
         },
         center: MAP_CENTER,
-        zoom: 11.5,
-        minZoom: 8,
+        zoom: 11,
+        minZoom: 2,
         maxZoom: 19,
       });
     } catch (error) {
       console.error('Gagal membuat peta:', error);
       setFatalError(
-        error instanceof Error ? error.message : 'Gagal membuat peta',
+        error instanceof Error ? error.message : 'Gagal membuat peta.',
       );
       return;
     }
 
     mapRef.current = map;
-    setStatus('dibuat');
 
     map.addControl(new maplibregl.NavigationControl(), 'top-right');
-    map.addControl(new maplibregl.ScaleControl({ unit: 'metric' }), 'bottom-right');
+    map.addControl(
+      new maplibregl.ScaleControl({ unit: 'metric' }),
+      'bottom-right',
+    );
 
     map.on('error', (event) => {
       console.error('MapLibre error:', event.error);
-      setTileErrors((n) => n + 1);
+      setTileErrors((count) => count + 1);
     });
-    map.on('style.load', () => setStatus('style dimuat'));
+
     map.on('load', () => {
       setStatus('siap');
       map.resize();
+      setMapReady(true);
     });
 
-    // Marker tidak perlu menunggu tile, jadi langsung siap.
-    setMapReady(true);
+    setStatus('peta dibuat');
 
     const resizeObserver = new ResizeObserver(() => map.resize());
     resizeObserver.observe(container);
 
     return () => {
       resizeObserver.disconnect();
+
       markersRef.current.forEach((marker) => marker.remove());
       markersRef.current = [];
       elementsRef.current.clear();
+
       map.remove();
       mapRef.current = null;
       setMapReady(false);
     };
   }, []);
 
-  // 2) Marker dibuat saat peta siap atau mode berubah.
+  // 2. Buat marker dari data API.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady) return;
@@ -139,9 +199,22 @@ export default function VillageMap({
     markersRef.current = [];
     elementsRef.current.clear();
 
-    VILLAGE_REPLAY_VALIDATION.forEach((village) => {
-      const element = document.createElement('button');
+    console.log('Data desa diterima VillageMap:', villages);
+    console.log('Jumlah desa:', villages.length);
 
+    villages.forEach((village) => {
+      const villageId = String(village.village_id);
+      const center = getVillageCenter(village.geom);
+
+      if (!center) {
+        console.warn(
+          `Geom tidak valid untuk desa ${village.name}:`,
+          village.geom,
+        );
+        return;
+      }
+
+      const element = document.createElement('button');
       element.type = 'button';
       element.textContent = village.name;
       element.title = `Lihat detail ${village.name}`;
@@ -157,26 +230,29 @@ export default function VillageMap({
         border: 2px solid white;
         border-radius: 999px;
         padding: 5px 9px;
-        background: ${getMarkerColor(mode, village)};
+        background: ${getMarkerColor(mode)};
         color: white;
         font-size: 11px;
         line-height: 1.2;
         font-weight: 700;
-        box-shadow: 0 2px 8px rgba(0,0,0,.25);
-        outline: none;
-        outline-offset: 2px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
       `;
 
       element.addEventListener('click', () => {
         selectRef.current(village);
       });
 
-      const marker = new maplibregl.Marker({ element, anchor: 'bottom' })
-        .setLngLat(village.coordinates)
+      const marker = new maplibregl.Marker({
+        element,
+        anchor: 'bottom',
+      })
+        .setLngLat(center)
         .addTo(map);
 
       markersRef.current.push(marker);
-      elementsRef.current.set(village.id, element);
+      elementsRef.current.set(villageId, element);
+
+      console.log(`Marker desa "${village.name}" pada koordinat:`, center);
     });
 
     return () => {
@@ -184,20 +260,52 @@ export default function VillageMap({
       markersRef.current = [];
       elementsRef.current.clear();
     };
-  }, [mode, mapReady]);
+  }, [villages, mode, mapReady]);
 
-  // 3) Update outline desa terpilih tanpa membuat ulang marker.
+  // 3. Arahkan peta ke desa dari API.
   useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !mapReady || villages.length === 0) return;
+
+    const firstVillage = villages.find(
+      (village) => getVillageCenter(village.geom) !== null,
+    );
+
+    if (!firstVillage) {
+      console.warn('Tidak ada desa dengan koordinat geom yang valid.');
+      return;
+    }
+
+    const center = getVillageCenter(firstVillage.geom);
+    if (!center) return;
+
+    map.flyTo({
+      center,
+      zoom: 11.5,
+      duration: 1000,
+    });
+  }, [villages, mapReady]);
+
+  // 4. Tandai marker yang dipilih.
+  useEffect(() => {
+    const selectedId = selectedVillage
+      ? String(selectedVillage.village_id)
+      : null;
+
     elementsRef.current.forEach((element, id) => {
-      const isSelected = id === selectedVillage.id;
-      element.style.outline = isSelected ? '3px solid #0f172a' : 'none';
+      const isSelected = id === selectedId;
+
+      element.style.outline = isSelected
+        ? '3px solid #0f172a'
+        : 'none';
+
       element.style.zIndex = isSelected ? '10' : '';
     });
-  }, [selectedVillage.id, mapReady, mode]);
+  }, [selectedVillage, mapReady, mode, villages]);
 
   return (
     <div
-      className="relative w-full bg-slate-100"
+      className="relative w-full overflow-hidden rounded-lg bg-slate-100"
       style={{ height: 360, minHeight: 360 }}
     >
       <div
@@ -212,18 +320,22 @@ export default function VillageMap({
         </div>
       )}
 
+      {!fatalError && villages.length === 0 && (
+        <div className="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white px-4 py-3 text-sm text-slate-600 shadow">
+          Belum ada data desa dari API.
+        </div>
+      )}
+
       <div className="absolute left-3 top-3 z-10 rounded-lg border border-slate-200 bg-white/95 px-3 py-2 text-[11px] shadow-md">
         <p className="font-bold text-slate-800">
           {mode === 'h3' ? 'Prediksi Risiko H−3' : 'Status Lapangan Hari H'}
         </p>
-        <p className="mt-0.5 text-slate-500">
-          {VILLAGE_REPLAY_VALIDATION.length} titik sampel
-        </p>
+        <p className="mt-0.5 text-slate-500">{villages.length} desa</p>
       </div>
 
       {SHOW_DEBUG && (
         <div className="absolute bottom-3 left-3 z-10 rounded bg-black/70 px-2 py-1 font-mono text-[10px] text-white">
-          peta: {status} · error: {tileErrors}
+          peta: {status} · marker: {markersRef.current.length} · error tile: {tileErrors}
         </div>
       )}
     </div>
