@@ -1,11 +1,8 @@
-import type { BasemapTheme, MapViewState, VectorTileLayer } from "@/types/map";
+import type { MapViewState, VectorTileLayer } from "@/types/map";
 
-const CARTO_GL_STYLES_URL = "https://basemaps.cartocdn.com/gl";
+export const BASEMAP_STYLE = "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json";
 
-export const BASEMAP_STYLES: Record<BasemapTheme, string> = {
-  light: `${CARTO_GL_STYLES_URL}/positron-gl-style/style.json`,
-  dark: `${CARTO_GL_STYLES_URL}/dark-matter-gl-style/style.json`,
-};
+export const INDONESIA_BOUNDS: [number, number, number, number] = [94.5, -11.2, 141.2, 6.3];
 
 export const DEFAULT_VIEW: MapViewState = {
   center: [98.0, 4.21],
@@ -30,4 +27,4 @@ export const ROAD_TILES: VectorTileLayer = { source: "roads", sourceLayer: "ruas
 export const VILLAGE_TILES: VectorTileLayer = { source: "villages", sourceLayer: "desa" };
 
 export const MAP_ATTRIBUTION =
-  "© OpenStreetMap contributors · Batas desa: BPS via OCHA HDX COD-AB (CC BY-IGO)";
+  "© OpenStreetMap contributors · © CARTO · Batas wilayah: BPS via OCHA HDX COD-AB (CC BY-IGO)";

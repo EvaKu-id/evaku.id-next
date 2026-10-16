@@ -1,4 +1,5 @@
 import type { AddLayerObject } from "maplibre-gl";
+import { PALETTE, REPLAY_COLORS } from "@/lib/palette";
 
 type LinePaint = NonNullable<Extract<AddLayerObject, { type: "line" }>["paint"]>;
 type FillPaint = NonNullable<Extract<AddLayerObject, { type: "fill" }>["paint"]>;
@@ -50,16 +51,16 @@ export const ROAD_TIERS: readonly RoadTierStyle[] = [
 ];
 
 export const ROAD_STATUS_COLORS = {
-  safe: "#94a3b8",
-  limited: "#d97706",
-  cut: "#e11d48",
-  unknown: "#64748b",
-  hover: "#0284c7",
+  safe: PALETTE.statusSafe,
+  limited: PALETTE.statusLimited,
+  cut: PALETTE.statusCut,
+  unknown: PALETTE.statusUnknown,
+  hover: PALETTE.brand,
 } as const;
 
 export const VILLAGE_STATUS_COLORS = {
-  fully_isolated: "#e11d48",
-  partially_isolated: "#d97706",
+  fully_isolated: PALETTE.statusCut,
+  partially_isolated: PALETTE.statusLimited,
 } as const;
 
 const CUT_DASH_RATIO = 0.4;
@@ -137,24 +138,42 @@ export function roadCutOpacity(): LinePaint["line-opacity"] {
   return ["case", ["==", status, 2], 0.95, 0];
 }
 
-export function villageFillColor(): FillPaint["fill-color"] {
+const villageStatus: Expression = ["coalesce", ["feature-state", "status"], "none"];
+const villageProbability: Expression = ["to-number", ["feature-state", "p"], -1];
+
+type FillMode = "status" | "probability" | "category";
+const villageCategory: Expression = ["coalesce", ["feature-state", "cat"], "none"];
+
+export function villageFillColor(mode: FillMode): FillPaint["fill-color"] {
+  if (mode === "category") {
+    return ["match", villageCategory, "tp", REPLAY_COLORS.tp, "fp", REPLAY_COLORS.fp, "fn", REPLAY_COLORS.fn, "rgba(0,0,0,0)"];
+  }
+  if (mode === "probability") {
+    return [
+      "step",
+      villageProbability,
+      "rgba(0,0,0,0)",
+      0,
+      PALETTE.probLow,
+      0.35,
+      PALETTE.probMid,
+      0.7,
+      PALETTE.probHigh,
+    ];
+  }
   return [
     "match",
-    ["coalesce", ["feature-state", "status"], "none"],
+    villageStatus,
     "fully_isolated",
     VILLAGE_STATUS_COLORS.fully_isolated,
     VILLAGE_STATUS_COLORS.partially_isolated,
   ];
 }
 
-export function villageFillOpacity(): FillPaint["fill-opacity"] {
-  return [
-    "match",
-    ["coalesce", ["feature-state", "status"], "none"],
-    "fully_isolated",
-    0.22,
-    "partially_isolated",
-    0.12,
-    0,
-  ];
+export function villageFillOpacity(mode: FillMode): FillPaint["fill-opacity"] {
+  if (mode === "category") return ["match", villageCategory, "tn", 0, "none", 0, 0.55];
+  if (mode === "probability") {
+    return ["step", villageProbability, 0, 0, 0.28, 0.35, 0.38, 0.7, 0.5];
+  }
+  return ["match", villageStatus, "fully_isolated", 0.3, "partially_isolated", 0.18, 0];
 }

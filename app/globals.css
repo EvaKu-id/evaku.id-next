@@ -1,37 +1,169 @@
 @import "tailwindcss";
 @import "maplibre-gl/dist/maplibre-gl.css";
-@custom-variant dark (&:where(.dark, .dark *));
-
 
 :root {
-  --background: #F1F5F9;
-  --foreground: #0F172A;
-  --footer-background: #071B30;
-  --header-background: #0B2A4A;
-  --card: #FFFFFF;
-  --font-heading: var(--font-jakarta), system-ui, sans-serif;
-  --font-body: var(--font-inter), system-ui, sans-serif;
-  --font-data: var(--font-jetbrains-mono), ui-monospace, monospace;
-}
-
-.dark {
-  color-scheme: dark;
-  --background: #0F172A;
-  --foreground: #E2E8F0;
-  --footer-background: #020617;
-  --header-background: #E2E8F0;
-  --card: #1e293b;
+  color-scheme: light;
+  --bg: #F4F8FC;
+  --bg-deep: #E8F1FB;
+  --surface: #FFFFFF;
+  --surface-2: #EAF1F9;
+  --surface-3: #DCE8F5;
+  --ink: #0B1B2E;
+  --ink-2: #33475E;
+  --muted: #5B6E84;
+  --rule: #D5E1EE;
+  --brand: #0B63CE;
+  --brand-strong: #084EA3;
+  --brand-soft: #E3EEFB;
+  --water-1: #BFE3F7;
+  --water-2: #6BB8E8;
+  --water-3: #2B7FC9;
+  --status-safe: #94A3B8;
+  --status-limited: #D97706;
+  --status-cut: #E11D48;
+  --status-unknown: #64748B;
+  --prob-low: #CBD5E1;
+  --prob-mid: #F59E0B;
+  --prob-high: #DC2626;
+  --site: #0F8A5F;
+  --focus: #0B63CE;
+  --shadow-float: 0 1px 2px rgb(11 27 46 / 0.06), 0 12px 32px -16px rgb(11 27 46 / 0.22);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-bg-deep: var(--bg-deep);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-water-1: var(--water-1);
+  --color-water-2: var(--water-2);
+  --color-water-3: var(--water-3);
+  --color-status-safe: var(--status-safe);
+  --color-status-limited: var(--status-limited);
+  --color-status-cut: var(--status-cut);
+  --color-status-unknown: var(--status-unknown);
+  --color-prob-low: var(--prob-low);
+  --color-prob-mid: var(--prob-mid);
+  --color-prob-high: var(--prob-high);
+  --color-site: var(--site);
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
+  --color-muted-foreground: var(--muted);
+  --color-border: var(--rule);
+  --color-card: var(--surface);
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-data: var(--font-geist-mono), ui-monospace, monospace;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --shadow-float: var(--shadow-float);
+  --radius-control: 8px;
+  --radius-panel: 14px;
 }
 
-body {
-  background: var(--background);
-  color: var(--header-background);
-  font-family: var(--font-body);
+@layer base {
+  html {
+    background: var(--bg);
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--brand-soft);
+    color: var(--ink);
+  }
+}
+
+@utility font-data {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+@utility label-data {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+@utility text-display {
+  font-size: clamp(2.3rem, 4.4vw, 3.9rem);
+  line-height: 1.04;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+}
+
+@utility text-h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 750;
+  letter-spacing: -0.025em;
+}
+
+@utility ornament-mask {
+  background-color: currentColor;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+  mask-position: center;
+}
+
+.maplibregl-ctrl-group {
+  border-radius: 8px;
+  box-shadow: var(--shadow-float);
+}
+
+/* Phones zoom with pinch; the buttons would collide with the map toolbar. */
+@media (max-width: 639px) {
+  .maplibregl-ctrl-top-right {
+    display: none;
+  }
+}
+
+.maplibregl-ctrl-attrib {
+  font-size: 10px;
+  background: rgb(255 255 255 / 0.8) !important;
+}
+
+.maplibregl-popup-content {
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: var(--shadow-float);
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: #fff;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

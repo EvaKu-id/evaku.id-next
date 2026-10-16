@@ -1,22 +1,24 @@
+"use client";
+
+import { useCallback, useRef, useState, type RefCallback } from "react";
 import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  type RefCallback,
-} from "react";
-import {
+  AttributionControl,
   Map as MaplibreMap,
   NavigationControl,
   ScaleControl,
 } from "maplibre-gl";
-import { BASEMAP_STYLES } from "@/lib/map-config";
+import { BASEMAP_STYLE, MAP_ATTRIBUTION } from "@/lib/map-config";
+import { onStyleReady, tintBasemap } from "@/lib/map-style";
 import { ensureMaplibreWorker } from "@/lib/maplibre-worker";
-import type { BasemapTheme, MapViewState } from "@/types/map";
+import type { BBox, MapViewState } from "@/types/map";
 
 interface UseMapLibreOptions {
-  initialView: MapViewState;
-  theme: BasemapTheme;
+  initialView?: MapViewState;
+  initialBounds?: BBox;
+  interactive?: boolean;
+  cooperativeGestures?: boolean;
+  navigation?: boolean;
+  preserveDrawingBuffer?: boolean;
 }
 
 interface UseMapLibreResult {
@@ -25,40 +27,51 @@ interface UseMapLibreResult {
 }
 
 export function useMapLibre(options: UseMapLibreOptions): UseMapLibreResult {
-  const { theme } = options;
   const [map, setMap] = useState<MaplibreMap | null>(null);
-  // Only the first options are used to create the map; theme changes go through setStyle below.
-  const initialOptionsRef = useRef(options);
-  const appliedThemeRef = useRef(theme);
+  // Only the first options are used; the map is created once per container.
+  const optionsRef = useRef(options);
 
   const containerRef = useCallback((container: HTMLDivElement | null) => {
     if (!container) return;
+    const {
+      initialView,
+      initialBounds,
+      interactive = true,
+      cooperativeGestures = false,
+      navigation = true,
+      preserveDrawingBuffer = false,
+    } = optionsRef.current;
 
-    const { initialView, theme } = initialOptionsRef.current;
     ensureMaplibreWorker();
     const instance = new MaplibreMap({
       container,
-      style: BASEMAP_STYLES[theme],
-      center: initialView.center,
-      zoom: initialView.zoom,
+      style: BASEMAP_STYLE,
+      center: initialView?.center,
+      zoom: initialView?.zoom,
+      bounds: initialBounds,
+      fitBoundsOptions: { padding: 24 },
+      interactive,
+      cooperativeGestures,
+      attributionControl: false,
+      canvasContextAttributes: { preserveDrawingBuffer },
+      dragRotate: false,
+      pitchWithRotate: false,
     });
-    instance.addControl(new NavigationControl(), "top-right");
-    instance.addControl(new ScaleControl(), "bottom-left");
+    instance.touchZoomRotate.disableRotation();
+    instance.addControl(new AttributionControl({ compact: true, customAttribution: MAP_ATTRIBUTION }));
+    if (interactive && navigation) {
+      instance.addControl(new NavigationControl({ showCompass: false }), "top-right");
+      instance.addControl(new ScaleControl({ unit: "metric" }), "bottom-left");
+    }
+    const stopTint = onStyleReady(instance, () => tintBasemap(instance));
 
-    appliedThemeRef.current = theme;
     setMap(instance);
-
     return () => {
+      stopTint();
       instance.remove();
       setMap(null);
     };
   }, []);
-
-  useEffect(() => {
-    if (!map || appliedThemeRef.current === theme) return;
-    map.setStyle(BASEMAP_STYLES[theme]);
-    appliedThemeRef.current = theme;
-  }, [map, theme]);
 
   return { containerRef, map };
 }

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "banjir-aceh-tenggara",
+    "file": "/photos/banjir-aceh-tenggara.webp",
+    "title": "Floods in Southeast Aceh Regency caused by heavy rainfall since 23 November",
+    "author": "Indonesian National Board for Disaster Management",
+    "license": "Public domain",
+    "license_url": "https://commons.wikimedia.org/wiki/File:Flood_in_Southeast_Aceh_Regency,_Sumatra.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Flood_in_Southeast_Aceh_Regency,_Sumatra.jpg",
+    "place": "Kabupaten Aceh Tenggara, Aceh",
+    "date": "2025-11-29"
+  },
+  {
+    "id": "banjir-dayeuhkolot",
+    "file": "/photos/banjir-dayeuhkolot.webp",
+    "title": "Flood in Dayeuhkolot street, an industrial area, south of Bandung",
+    "author": "NFarras for Transport for Bandung",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Flood_in_Dayeukolot_(2024).jpg",
+    "place": "Dayeuhkolot, Kabupaten Bandung, Jawa Barat",
+    "date": "2024-02-17"
+  },
+  {
+    "id": "banjir-jalan-raya-bintara",
+    "file": "/photos/banjir-jalan-raya-bintara.webp",
+    "title": "Floods that cuts the Raya Bintara Rd. on 1st January, 2020",
+    "author": "Fikri RA",
+    "license": "CC BY 4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0",
+    "source_url": "https://commons.wikimedia.org/wiki/File:Floods_in_Raya_Bintara_Rd._(1_January_2020).jpg",
+    "place": "Jalan Raya Bintara, Kota Bekasi, Jawa Barat",
+    "date": "2020-01-01"
+  },
+  {
+    "id": "banjir-tapanuli-utara",
+    "file": "/photos/banjir-tapanuli-utara.webp",
+    "title": "A house was flooded in North Tapanuli Regency, North Sumatra on November 25, 2025",
+    "author": "Indonesian National Board for Disaster Management",
+    "license": "Public domain",
+    "license_url": "https://commons.wikimedia.org/wiki/File:House_flooded_in_North_Tapanuli,_Sumatra_caused_by_Cyclone_Senyar.jpg",
+    "source_url": "https://commons.wikimedia.org/wiki/File:House_flooded_in_North_Tapanuli,_Sumatra_caused_by_Cyclone_Senyar.jpg",
+    "place": "Kabupaten Tapanuli Utara, Sumatera Utara",
+    "date": "2025-11-27"
+  }
+]
