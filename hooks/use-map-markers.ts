@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Marker, Popup, type Map as MaplibreMap } from "maplibre-gl";
-import type { MapMarker } from "@/lib/types/map";
+import type { MapMarker } from "@/types/map";
 
 const NO_MARKERS: readonly MapMarker[] = [];
 

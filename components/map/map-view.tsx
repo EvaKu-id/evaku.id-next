@@ -12,7 +12,6 @@ import {
   MapPin,
   Maximize2,
   Radio,
-  ShieldAlert,
   ShieldCheck,
   X,
 } from "lucide-react";
@@ -20,13 +19,17 @@ import {
 import { useMapLibre } from "@/hooks/use-maplibre";
 import { useMapMarkers } from "@/hooks/use-map-markers";
 import { useRoadLayers, type SelectedRoadInfo } from "@/hooks/use-road-layers";
-import { DEFAULT_VIEW } from "@/lib/map-config";
+import { useVillageLayers } from "@/hooks/use-village-layers";
+import { DEFAULT_VIEW, MAP_ATTRIBUTION } from "@/lib/map-config";
+import { ROAD_STATUS_COLORS } from "@/lib/road-style";
 import type { RoadStatus } from "@/lib/schemas/roads";
 import type {
   BasemapTheme,
   MapMarker,
   MapViewState,
-} from "@/lib/types/map";
+  VillageAccess,
+} from "@/types/map";
+import { MapLegend } from "./map-legend";
 
 const DEFAULT_CLASS_NAME = "h-full min-h-[460px] w-full";
 
@@ -34,6 +37,7 @@ interface MapViewProps {
   initialView?: MapViewState;
   markers?: readonly MapMarker[];
   roads?: readonly RoadStatus[];
+  villages?: readonly VillageAccess[];
   className?: string;
   showLegend?: boolean;
   onSelectRoad?: (road: SelectedRoadInfo | null) => void;
@@ -45,25 +49,25 @@ const ROAD_STATUS_MAP: Record<
 > = {
   0: {
     label: "Aman",
-    color: "bg-emerald-600 text-white dark:bg-emerald-500",
-    desc: "Bebas genangan, aman untuk semua kendaraan",
+    color: ROAD_STATUS_COLORS.safe,
+    desc: "Genangan ≤30 cm, aman untuk semua kendaraan",
     icon: CheckCircle2,
   },
   1: {
     label: "Terbatas",
-    color: "bg-amber-600 text-white dark:bg-amber-500",
-    desc: "Genangan rendah (<30 cm), hanya truk/kendaraan tinggi",
+    color: ROAD_STATUS_COLORS.limited,
+    desc: "Genangan 30–60 cm, hanya truk/kendaraan tinggi",
     icon: AlertTriangle,
   },
   2: {
     label: "Putus",
-    color: "bg-rose-600 text-white dark:bg-rose-500",
-    desc: "Terendam tinggi (≥30 cm) atau jembatan rusak",
+    color: ROAD_STATUS_COLORS.cut,
+    desc: "Genangan >60 cm atau jalan menuju jembatan terendam",
     icon: Ban,
   },
   3: {
     label: "Belum Diketahui",
-    color: "bg-slate-500 text-white dark:bg-slate-600",
+    color: ROAD_STATUS_COLORS.unknown,
     desc: "Belum ada laporan sensor atau tim lapangan",
     icon: HelpCircle,
   },
@@ -73,13 +77,13 @@ export function MapView({
   initialView = DEFAULT_VIEW,
   markers,
   roads,
+  villages,
   className = DEFAULT_CLASS_NAME,
   showLegend = true,
   onSelectRoad,
 }: MapViewProps) {
   const { resolvedTheme } = useTheme();
   const [selectedRoad, setSelectedRoad] = useState<SelectedRoadInfo | null>(null);
-  const [legendOpen, setLegendOpen] = useState(true);
 
   const theme: BasemapTheme = resolvedTheme === "dark" ? "dark" : "light";
 
@@ -90,6 +94,9 @@ export function MapView({
 
   // Tampilkan marker lokasi desa/posko
   useMapMarkers(map, markers);
+
+  // Dipanggil sebelum layer ruas supaya batas desa tergambar di bawah jalan
+  useVillageLayers({ map, villages });
 
   // Terapkan layer ruas jalan dan setFeatureState dinamis
   useRoadLayers({
@@ -148,13 +155,13 @@ export function MapView({
         <div className="flex flex-wrap items-center justify-between gap-3 border-b px-4 py-3 bg-muted/20">
           <div className="flex items-center gap-2 text-sm font-medium">
             <MapPin size={16} className="text-blue-500" />
-            <span>Kawasan Padang (Koto Tangah)</span>
+            <span>Kabupaten Aceh Tamiang</span>
           </div>
 
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5">
               <Activity size={14} className="text-sky-500" />
-              {markers?.length ?? 0} titik desa
+              {villages?.length ?? markers?.length ?? 0} desa
             </span>
             <span className="hidden sm:inline">•</span>
             <span className="flex items-center gap-1.5">
@@ -199,7 +206,8 @@ export function MapView({
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Kondisi Akses:</span>
                   <span
-                    className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold text-[11px] ${activeStatus.color}`}
+                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full font-bold text-[11px] text-white"
+                    style={{ backgroundColor: activeStatus.color }}
                   >
                     <activeStatus.icon size={13} />
                     {activeStatus.label}
@@ -222,70 +230,7 @@ export function MapView({
             </div>
           )}
 
-          {/* Legenda Kondisi Ruas Jalan (Colorblind-Safe) (UI-05 requirement) */}
-          {showLegend && (
-            <div className="absolute bottom-4 right-4 z-20 max-w-64 rounded-2xl border border-border bg-background/95 p-3.5 shadow-lg backdrop-blur-md">
-              <div className="flex items-center justify-between gap-2 mb-2 pb-1.5 border-b border-border/60">
-                <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
-                  <ShieldAlert size={14} className="text-sky-500" />
-                  Kondisi Ruas Jalan
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setLegendOpen((v) => !v)}
-                  className="text-[10px] text-muted-foreground hover:text-foreground underline"
-                >
-                  {legendOpen ? "Sembunyikan" : "Buka"}
-                </button>
-              </div>
-
-              {legendOpen && (
-                <div className="space-y-2 text-[11px]">
-                  {/* Status 0: Aman */}
-                  <div className="flex items-center gap-2.5">
-                    <span className="h-1.5 w-6 rounded-full bg-emerald-600 dark:bg-emerald-500 shrink-0 shadow-xs" />
-                    <span className="text-muted-foreground">
-                      <strong className="text-foreground">Aman</strong> (0 cm, semua kendaraan)
-                    </span>
-                  </div>
-
-                  {/* Status 1: Terbatas */}
-                  <div className="flex items-center gap-2.5">
-                    <span className="h-1.5 w-6 rounded-full bg-amber-600 dark:bg-amber-500 shrink-0 shadow-xs" />
-                    <span className="text-muted-foreground">
-                      <strong className="text-foreground">Terbatas</strong> (&lt;30 cm, hanya truk)
-                    </span>
-                  </div>
-
-                  {/* Status 2: Putus (Garis Putus-Putus) */}
-                  <div className="flex items-center gap-2.5">
-                    <span
-                      className="h-2 w-6 shrink-0 rounded-xs bg-rose-600 dark:bg-rose-500 relative flex items-center justify-center overflow-hidden"
-                      style={{
-                        backgroundImage:
-                          "repeating-linear-gradient(90deg, transparent, transparent 3px, #fff 3px, #fff 6px)",
-                      }}
-                    />
-                    <span className="text-muted-foreground">
-                      <strong className="text-rose-600 dark:text-rose-400">Putus</strong> (Garis putus-putus)
-                    </span>
-                  </div>
-
-                  {/* Status 3: Belum diketahui */}
-                  <div className="flex items-center gap-2.5">
-                    <span className="h-1.5 w-6 rounded-full bg-slate-500 dark:bg-slate-600 shrink-0" />
-                    <span className="text-muted-foreground">
-                      <strong className="text-foreground">Belum Diketahui</strong>
-                    </span>
-                  </div>
-
-                  <p className="pt-1.5 text-[10px] text-muted-foreground border-t border-border/40 leading-tight">
-                    *Pola garis putus-putus memudahkan pembedaan saat mode buta warna.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
+          {showLegend && <MapLegend />}
         </div>
 
         {/* Map Footer Bar */}
@@ -293,7 +238,7 @@ export function MapView({
           <div className="flex items-center gap-2">
             <Layers3 size={14} />
             <span>
-              Basemap: {theme === "dark" ? "Dark Matter" : "Positron"} • MapLibre GL
+              Basemap: {theme === "dark" ? "Dark Matter" : "Positron"} • {MAP_ATTRIBUTION}
             </span>
           </div>
 

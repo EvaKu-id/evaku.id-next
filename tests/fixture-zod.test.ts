@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "node:path";
 import * as S from "@/contracts/schema"; 
 import * as PublicApi from "@/contracts/public-api";
+import { villageDetailsSchema } from "@/lib/schemas/village";
 
 const ROOT = "mocks/fixtures";
 // tar di pasin be
@@ -37,6 +38,7 @@ const cases: Record<string, z.ZodType> = {
   "public/roads.kosong.200.json": PublicApi.publicRoadsResponse,
   "public/villages.200.json": PublicApi.publicVillagesResponse,
   "public/villages.kosong.200.json": PublicApi.publicVillagesResponse,
+  "public/village-detail.200.json": villageDetailsSchema,
   "_error/public-500.json": PublicApi.publicErrorResponse,
 };
 
@@ -64,9 +66,9 @@ describe("kasus khusus", () => {
     expect(read("desa/detail.200.json").titik_evakuasi).toHaveLength(3);
   });
   it("desa terisolasi: tanpa akses darat dan ada titik perahu", () => {
-    const d = read("desa/detail.terisolasi.200.json");
+    const d = S.desaDetailResponse.parse(read("desa/detail.terisolasi.200.json"));
     expect(d.terisolasi).toBe(true);
-    expect(d.titik_evakuasi.some((t: any) => t.jenis === "titik_perahu")).toBe(true);
+    expect(d.titik_evakuasi.some((t) => t.jenis === "titik_perahu")).toBe(true);
   });
   it("simulasi cadangan ditandai sumber cadangan", () => {
     expect(read("simulasi/hasil.cadangan.200.json").sumber).toBe("cadangan");

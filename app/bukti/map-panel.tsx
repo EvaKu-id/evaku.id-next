@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import {
   Layers,
@@ -12,8 +12,8 @@ import {
   Eye,
 } from 'lucide-react';
 
-import { useVillages } from './use-villages';
-import type { VillageReplayValidation } from './types';
+import { useVillages } from '@/hooks/use-villages';
+import type { VillageDetails } from '@/lib/schemas/village';
 
 type MapMode = 'h3' | 'hariH';
 type ViewMode = 'split' | 'toggle';
@@ -40,28 +40,12 @@ export default function BuktiMapPanel() {
   // Data diambil dari API, bukan array hardcode di data.ts.
   const { villages, loading, error } = useVillages();
 
-  // State desa terpilih cukup dideklarasikan satu kali.
-  const [selectedVillage, setSelectedVillage] =
-    useState<VillageReplayValidation | null>(null);
-
-  // Pilih desa pertama setelah data API diterima.
-  useEffect(() => {
-    if (villages.length === 0) {
-      setSelectedVillage(null);
-      return;
-    }
-
-    setSelectedVillage((current) => {
-      if (!current) return villages[0];
-
-      return (
-        villages.find(
-          (village) =>
-            village.village_id === current.village_id,
-        ) ?? villages[0]
-      );
-    });
-  }, [villages]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const selectedVillage =
+    villages.find((village) => village.village_id === selectedId) ??
+    villages[0] ??
+    null;
+  const selectVillage = (village: VillageDetails) => setSelectedId(village.village_id);
 
   const totalPopulation = villages.reduce(
     (total, village) => total + (village.population ?? 0),
@@ -240,7 +224,7 @@ export default function BuktiMapPanel() {
             mode="h3"
             villages={villages}
             selectedVillage={selectedVillage}
-            onSelectVillage={setSelectedVillage}
+            onSelectVillage={selectVillage}
           />
         )}
 
@@ -251,7 +235,7 @@ export default function BuktiMapPanel() {
             mode="hariH"
             villages={villages}
             selectedVillage={selectedVillage}
-            onSelectVillage={setSelectedVillage}
+            onSelectVillage={selectVillage}
           />
         )}
       </div>
@@ -293,19 +277,19 @@ export default function BuktiMapPanel() {
 
             <DetailCell
               label="Total Populasi"
-              value={selectedVillage.population.toLocaleString('id-ID')}
+              value={formatCount(selectedVillage.population)}
               icon={<Users size={14} />}
             />
 
             <DetailCell
               label="Penduduk Lansia"
-              value={selectedVillage.elderly.toLocaleString('id-ID')}
+              value={formatCount(selectedVillage.elderly)}
               icon={<HeartPulse size={14} />}
             />
 
             <DetailCell
               label="Anak di Bawah 5 Tahun"
-              value={selectedVillage.children_under5.toLocaleString('id-ID')}
+              value={formatCount(selectedVillage.children_under5)}
               icon={<Baby size={14} />}
             />
           </div>
@@ -333,6 +317,10 @@ export default function BuktiMapPanel() {
   );
 }
 
+function formatCount(value: number | null): string {
+  return value === null ? '—' : value.toLocaleString('id-ID');
+}
+
 /* Kartu peta */
 
 function MapCard({
@@ -346,9 +334,9 @@ function MapCard({
   title: string;
   subtitle: string;
   mode: MapMode;
-  villages: VillageReplayValidation[];
-  selectedVillage: VillageReplayValidation;
-  onSelectVillage: (village: VillageReplayValidation) => void;
+  villages: VillageDetails[];
+  selectedVillage: VillageDetails;
+  onSelectVillage: (village: VillageDetails) => void;
 }) {
   const isPrediction = mode === 'h3';
 

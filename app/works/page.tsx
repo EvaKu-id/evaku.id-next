@@ -77,7 +77,6 @@ const [activeStep, setActiveStep] = useState(0);
             {/* Step Selection Buttons (Left Column) */}
             <div className="space-y-3 lg:col-span-5">
               {workflowSteps.map((item, idx) => {
-                const IconComponent = item.icon;
                 const isActive = activeStep === idx;
                 return (
                   <button

@@ -4,13 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 
-import type { VillageReplayValidation } from './types';
+import { DEFAULT_VIEW } from '@/lib/map-config';
+import { ensureMaplibreWorker } from '@/lib/maplibre-worker';
+import type { VillageDetails } from '@/lib/schemas/village';
 
 type MapMode = 'h3' | 'hariH';
 type Position = [number, number];
-
-const SHOW_DEBUG = true;
-const MAP_CENTER: Position = [100.36, -0.865];
 const CARTO_API_KEY = process.env.NEXT_PUBLIC_CARTO_API_KEY;
 
 const CARTO_RASTER_HOSTS = [
@@ -71,15 +70,20 @@ function getVillageCenter(geom: unknown): Position | null {
   return [longitude, latitude];
 }
 
+function canUseWebGL(): boolean {
+  const canvas = document.createElement('canvas');
+  return Boolean(canvas.getContext('webgl2') ?? canvas.getContext('webgl'));
+}
+
 function getMarkerColor(mode: MapMode): string {
   return mode === 'h3' ? '#2563eb' : '#059669';
 }
 
 interface VillageMapProps {
   mode: MapMode;
-  villages: VillageReplayValidation[];
-  selectedVillage: VillageReplayValidation | null;
-  onSelectVillage: (village: VillageReplayValidation) => void;
+  villages: VillageDetails[];
+  selectedVillage: VillageDetails | null;
+  onSelectVillage: (village: VillageDetails) => void;
 }
 
 export default function VillageMap({
@@ -90,14 +94,13 @@ export default function VillageMap({
 }: VillageMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const markersRef = useRef<maplibregl.Marker[]>([]);
   const elementsRef = useRef<Map<string, HTMLButtonElement>>(new Map());
   const selectRef = useRef(onSelectVillage);
 
   const [mapReady, setMapReady] = useState(false);
-  const [status, setStatus] = useState('menyiapkan');
-  const [tileErrors, setTileErrors] = useState(0);
-  const [fatalError, setFatalError] = useState<string | null>(null);
+  const [fatalError] = useState<string | null>(() =>
+    canUseWebGL() ? null : 'Peta membutuhkan WebGL, yang tidak tersedia di browser ini.',
+  );
 
   useEffect(() => {
     selectRef.current = onSelectVillage;
@@ -106,11 +109,12 @@ export default function VillageMap({
   // 1. Inisialisasi peta.
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || fatalError) return;
 
     let map: maplibregl.Map;
 
     try {
+      ensureMaplibreWorker();
       map = new maplibregl.Map({
         container,
         style: {
@@ -140,16 +144,13 @@ export default function VillageMap({
             },
           ],
         },
-        center: MAP_CENTER,
+        center: DEFAULT_VIEW.center,
         zoom: 11,
         minZoom: 2,
         maxZoom: 19,
       });
     } catch (error) {
       console.error('Gagal membuat peta:', error);
-      setFatalError(
-        error instanceof Error ? error.message : 'Gagal membuat peta.',
-      );
       return;
     }
 
@@ -163,56 +164,37 @@ export default function VillageMap({
 
     map.on('error', (event) => {
       console.error('MapLibre error:', event.error);
-      setTileErrors((count) => count + 1);
     });
 
     map.on('load', () => {
-      setStatus('siap');
       map.resize();
       setMapReady(true);
     });
-
-    setStatus('peta dibuat');
 
     const resizeObserver = new ResizeObserver(() => map.resize());
     resizeObserver.observe(container);
 
     return () => {
       resizeObserver.disconnect();
-
-      markersRef.current.forEach((marker) => marker.remove());
-      markersRef.current = [];
-      elementsRef.current.clear();
-
       map.remove();
       mapRef.current = null;
       setMapReady(false);
     };
-  }, []);
+  }, [fatalError]);
 
   // 2. Buat marker dari data API.
   useEffect(() => {
     const map = mapRef.current;
     if (!map || !mapReady) return;
 
-    markersRef.current.forEach((marker) => marker.remove());
-    markersRef.current = [];
-    elementsRef.current.clear();
-
-    console.log('Data desa diterima VillageMap:', villages);
-    console.log('Jumlah desa:', villages.length);
+    const markers: maplibregl.Marker[] = [];
+    const elements = new Map<string, HTMLButtonElement>();
+    elementsRef.current = elements;
 
     villages.forEach((village) => {
       const villageId = String(village.village_id);
       const center = getVillageCenter(village.geom);
-
-      if (!center) {
-        console.warn(
-          `Geom tidak valid untuk desa ${village.name}:`,
-          village.geom,
-        );
-        return;
-      }
+      if (!center) return;
 
       const element = document.createElement('button');
       element.type = 'button';
@@ -249,16 +231,13 @@ export default function VillageMap({
         .setLngLat(center)
         .addTo(map);
 
-      markersRef.current.push(marker);
-      elementsRef.current.set(villageId, element);
-
-      console.log(`Marker desa "${village.name}" pada koordinat:`, center);
+      markers.push(marker);
+      elements.set(villageId, element);
     });
 
     return () => {
-      markersRef.current.forEach((marker) => marker.remove());
-      markersRef.current = [];
-      elementsRef.current.clear();
+      markers.forEach((marker) => marker.remove());
+      elements.clear();
     };
   }, [villages, mode, mapReady]);
 
@@ -271,12 +250,7 @@ export default function VillageMap({
       (village) => getVillageCenter(village.geom) !== null,
     );
 
-    if (!firstVillage) {
-      console.warn('Tidak ada desa dengan koordinat geom yang valid.');
-      return;
-    }
-
-    const center = getVillageCenter(firstVillage.geom);
+    const center = firstVillage ? getVillageCenter(firstVillage.geom) : null;
     if (!center) return;
 
     map.flyTo({
@@ -332,12 +306,6 @@ export default function VillageMap({
         </p>
         <p className="mt-0.5 text-slate-500">{villages.length} desa</p>
       </div>
-
-      {SHOW_DEBUG && (
-        <div className="absolute bottom-3 left-3 z-10 rounded bg-black/70 px-2 py-1 font-mono text-[10px] text-white">
-          peta: {status} · marker: {markersRef.current.length} · error tile: {tileErrors}
-        </div>
-      )}
     </div>
   );
 }

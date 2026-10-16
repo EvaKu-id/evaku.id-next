@@ -1,5 +1,5 @@
 import "server-only";
-import type { VillageDetails } from "../schemas/village";
+import { villageDetailsSchema, type VillageDetails } from "@/lib/schemas/village";
 import { supabaseAdmin } from "./db";
 
 export class VillageNotFoundError extends Error {
@@ -13,7 +13,7 @@ export async function getVillagesDetail(
   villageId: string,
   runId?: string,
 ): Promise<VillageDetails> {
-  const { data, error } = await supabaseAdmin.rpc("village_detail", {
+  const { data, error } = await supabaseAdmin().rpc("village_detail", {
     p_village_id: villageId,
   });
 
@@ -29,5 +29,5 @@ export async function getVillagesDetail(
     // function untuk mengambil sisa data lain sesuai dengan VillageDetails
   }
 
-  return data;
+  return villageDetailsSchema.parse(data);
 }

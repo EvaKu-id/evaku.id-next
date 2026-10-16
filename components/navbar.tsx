@@ -12,7 +12,7 @@ const links = [
   { label: "Posko Komando", href: "/komando" },
 ];
 
-export default function Navbar() {
+export function Navbar() {
   const [open, setOpen] = useState(false);
 
   // Tutup menu dengan tombol Escape

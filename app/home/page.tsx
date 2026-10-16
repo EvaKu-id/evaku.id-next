@@ -1,30 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
-import {
-  Activity,
-  AlertTriangle,
-  ArrowRight,
-  ArrowUpRight,
-  CheckCircle2,
-  ChevronRight,
-  Compass,
-  Layers,
-  LifeBuoy,
-  MapPin,
-  PhoneCall,
-  Radio,
-  ShieldAlert,
-  ShieldCheck,
-  Waves,
-} from "lucide-react";
+import { ArrowRight, ArrowUpRight, Compass, Radio, Waves } from "lucide-react";
 
 
 export default function HomeContent() {
-  const [activeStep, setActiveStep] = useState(0);
-
   return (
     <main className="min-h-screen text-[#0B2A4A] dark:text-[#E2E8F0]">
       {/* ========================================================================= */}

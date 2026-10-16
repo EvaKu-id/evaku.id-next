@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     agentFeedback: true,
+    instantInsights: {
+      // In mock mode MswProvider renders nothing until the service worker is ready,
+      // so implicit instant-navigation validation would flag every page as dropped.
+      validationLevel:
+        process.env.NEXT_PUBLIC_API_MOCKING === "enabled" ? "manual-warning" : "warning",
+    },
   },
   cacheComponents: true,
   partialPrefetching: true,
