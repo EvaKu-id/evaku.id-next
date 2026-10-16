@@ -11,15 +11,27 @@ export function useVillages() {
   useEffect(() => {
     const controller = new AbortController();
 
+    console.log("[useVillages] Effect dijalankan");
+
     async function fetchVillages() {
       try {
+        console.count("[useVillages] Fetch dikirim");
+
         const response = await fetch("/api/villages/1", {
           signal: controller.signal,
+          cache: "no-store",
         });
         if (!response.ok) {
           throw new Error(`Gagal mengambil data: HTTP ${response.status}`);
         }
-        setVillages([villageDetailsSchema.parse(await response.json())]);
+        const data = villageDetailsSchema.parse(await response.json());
+
+        if (controller.signal.aborted) return;
+
+        console.log("[useVillages] Data diterima:", data);
+
+        setVillages([data]);
+        setError(null);
       } catch (err) {
         if (err instanceof Error && err.name === "AbortError") return;
         setError(err instanceof Error ? err.message : "Terjadi kesalahan.");
@@ -29,7 +41,10 @@ export function useVillages() {
     }
 
     void fetchVillages();
-    return () => controller.abort();
+    return () => {
+      console.log("[useVillages] Cleanup");
+      controller.abort();
+    };
   }, []);
 
   return { villages, loading, error };
