@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Compass, Waves } from "lucide-react";
 import ThemeToggle from "@/components/theme-toggle";
+import Image from "next/image";
 
 const links = [
   { label: "Home", href: "/" },
@@ -43,7 +44,14 @@ export function Navbar() {
             className="flex items-center gap-2 font-heading font-extrabold text-white text-base tracking-tight hover:opacity-90 transition-opacity pl-1"
           >
             <div className="flex size-8 items-center justify-center rounded-full bg-sky-500/20 text-sky-400 border border-sky-400/30">
-              <Waves size={17} />
+              <Image
+                  src="/logo.png"
+                  alt="Logo Tanggap Banjir"
+                  width={160}
+                  height={48}
+                  priority
+                  style={{ height: "auto", width: "auto" }}
+                />
             </div>
             <span>
               Evaku<span className="font-light text-sky-400">.id</span>

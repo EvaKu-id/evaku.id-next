@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Waves } from "lucide-react";
+import Image from "next/image";
 
 export function Footer() {
 
@@ -10,7 +11,14 @@ export function Footer() {
           <div className="grid gap-10 md:grid-cols-4 pb-12 border-b border-white/10">
             <div className="md:col-span-2">
               <div className="text-2xl font-extrabold font-heading text-white tracking-tight flex items-center gap-2">
-                <Waves size={24} className="text-sky-400" />
+                      <Image
+                        src="/logo.png"
+                        alt="Logo Tanggap Banjir"
+                        width={160}
+                        height={48}
+                        priority
+                        style={{ height: 48, width: "auto" }}
+                         />
                 Evaku<span className="font-light text-sky-400">.id</span>
               </div>
               <p className="mt-4 max-w-sm text-xs sm:text-sm leading-relaxed text-slate-400">

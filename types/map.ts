@@ -11,7 +11,7 @@ export interface MapMarker {
   lngLat: LngLat;
   label?: string;
 }
-
+git
 export type RoadStatusCode = 0 | 1 | 2 | 3;
 
 export type VillageAccessStatus =
