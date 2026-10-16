@@ -33,6 +33,7 @@ import publicRoads from "./fixtures/public/roads.200.json";
 import publicRoadsKosong from "./fixtures/public/roads.kosong.200.json";
 import publicVillages from "./fixtures/public/villages.200.json";
 import publicVillagesKosong from "./fixtures/public/villages.kosong.200.json";
+import publicVillageDetail from "./fixtures/public/village-detail.200.json";
 
 type Variants = { normal: unknown } & Partial<Record<Skenario, unknown>>;
 
@@ -65,6 +66,7 @@ export const handlers = [
   servePublic("*/api/latest", { normal: publicLatest, kosong: publicLatestKosong }),
   servePublic("*/api/runs/:id/roads", { normal: publicRoads, kosong: publicRoadsKosong }),
   servePublic("*/api/runs/:id/villages", { normal: publicVillages, kosong: publicVillagesKosong }),
+  servePublic("*/api/villages/:id", { normal: publicVillageDetail }),
   serve("get", "*/api/run/latest",     { normal: runNormal, cadangan: runCadangan }),
   serve("get", "*/api/ruas/status",    { normal: ruasNormal, kosong: ruasKosong }),
   serve("get", "*/api/desa",           { normal: desaNormal, kosong: desaKosong }),

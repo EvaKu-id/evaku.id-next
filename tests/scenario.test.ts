@@ -1,13 +1,18 @@
-import { describe, it, expect, beforeAll, afterAll, afterEach } from "bun:test";
-import { server } from "@/mocks/server";
+import { describe, it, expect, afterEach } from "bun:test";
+import { getResponse } from "msw";
+import { handlers } from "@/mocks/handlers";
 import { setSkenario } from "@/mocks/scenario";
 
-beforeAll(() => server.listen({ onUnhandledFrame: "error" }));
-afterEach(() => { server.resetHandlers(); setSkenario("normal"); });
-afterAll(() => server.close());
+afterEach(() => setSkenario("normal"));
 
 const B = "http://localhost:3000";
-const get = (p: string) => fetch(`${B}${p}`);
+
+// MSW's node interceptors cannot patch Bun's TLS sockets, so handlers are called directly.
+async function get(p: string, init?: RequestInit): Promise<Response> {
+  const res = await getResponse(handlers, new Request(`${B}${p}`, init));
+  if (!res) throw new Error(`no mock handler for ${p}`);
+  return res;
+}
 
 describe("skenario mock", () => {
   it("normal: desa berisi data", async () => {
@@ -22,7 +27,7 @@ describe("skenario mock", () => {
   });
   it("cadangan: simulasi bersumber cadangan", async () => {
     setSkenario("cadangan");
-    const r = await fetch(`${B}/api/simulasi`, { method: "POST" });
+    const r = await get("/api/simulasi", { method: "POST" });
     expect((await r.json()).sumber).toBe("cadangan");
   });
   it("error: semua endpoint 500", async () => {

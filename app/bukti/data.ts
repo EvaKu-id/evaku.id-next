@@ -3,9 +3,8 @@ import {
   CalibrationPoint, 
   LeadTimeEvalPoint, 
   BenchmarkComparison, 
-  VillageReplayValidation, 
   MetricsData
-} from "./types";
+} from "@/types/bukti";
 
 /**
  * 1. Data Tabel Database `metrics`
@@ -123,9 +122,3 @@ export const BENCHMARK_DATA: BenchmarkComparison[] = [
   },
   
 ];
-
-/**
- * 5. Data Sampel Validasi Replay Kota Padang (Kecamatan Koto Tangah & Sekitarnya)
- * Ambang batas: >= 0.70 (Terisolasi), 0.35 - 0.70 (Waspada), < 0.35 (Aman)
- */
-export const VILLAGE_REPLAY_VALIDATION: VillageReplayValidation[] = [];

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { MapView } from "@/components/map";
-import type { MapMarker } from "@/lib/types/map";
 import {
   Activity,
   CheckCircle2,
@@ -61,7 +60,7 @@ export default function Komando() {
 
     async function loadMonitoringData() {
       try {
-        const latestResponse = await fetch("/api/villages/1", {
+        const latestResponse = await fetch("/api/latest", {
           signal: controller.signal,
         });
         if (!latestResponse.ok) throw new Error("Latest run request failed");
@@ -99,25 +98,6 @@ export default function Komando() {
     void loadMonitoringData();
     return () => controller.abort();
   }, []);
-
-  const villageMarkers: MapMarker[] = (data?.villages ?? []).map((v) => {
-    const coordsMap: Record<string, [number, number]> = {
-      "1371010001": [100.372, -0.835],
-      "1371010002": [100.355, -0.845],
-      "1371010003": [100.365, -0.82],
-      "1371010004": [100.35, -0.875],
-      "1371010005": [100.338, -0.84],
-      "1371010006": [100.362, -0.86],
-      "1371010007": [100.315, -0.83],
-      "1371010008": [100.365, -0.915],
-      "1371010009": [100.37, -0.93],
-      "1371010010": [100.385, -0.815],
-    };
-    return {
-      lngLat: coordsMap[v.village_id] ?? [100.36, -0.845],
-      label: v.name,
-    };
-  });
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -166,8 +146,7 @@ export default function Komando() {
 
             <div className="p-2 sm:p-3">
               <MapView
-                initialView={{ center: [100.36, -0.865], zoom: 11.5 }}
-                markers={villageMarkers}
+                villages={data?.villages}
                 roads={data?.roads}
                 className="h-120 min-h-120 w-full overflow-hidden rounded-md sm:h-155"
               />

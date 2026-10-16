@@ -1,34 +1,1706 @@
 [
   {
-    "village_id": "1371010001",
-    "name": "Lubuk Minturun",
+    "village_id": "1114021002",
+    "name": "Tenggulun",
     "status": "fully_isolated",
-    "isolated_population": 5420,
-    "flooded_population": 1840,
-    "priority_score": 0.92
+    "isolated_population": 6046,
+    "flooded_population": 257,
+    "priority_score": 0.96
   },
   {
-    "village_id": "1371010002",
-    "name": "Koto Panjang Ikur Koto",
+    "village_id": "1114021001",
+    "name": "Selamat",
+    "status": "fully_isolated",
+    "isolated_population": 5836,
+    "flooded_population": 558,
+    "priority_score": 0.94
+  },
+  {
+    "village_id": "1114021003",
+    "name": "Rimba Sawang",
+    "status": "fully_isolated",
+    "isolated_population": 1804,
+    "flooded_population": 296,
+    "priority_score": 0.66
+  },
+  {
+    "village_id": "1114020017",
+    "name": "Tanjung Mancang",
+    "status": "fully_isolated",
+    "isolated_population": 1209,
+    "flooded_population": 179,
+    "priority_score": 0.63
+  },
+  {
+    "village_id": "1114010002",
+    "name": "Rongoh",
+    "status": "fully_isolated",
+    "isolated_population": 995,
+    "flooded_population": 157,
+    "priority_score": 0.61
+  },
+  {
+    "village_id": "1114010004",
+    "name": "Alur Tani II",
+    "status": "fully_isolated",
+    "isolated_population": 1043,
+    "flooded_population": 0,
+    "priority_score": 0.61
+  },
+  {
+    "village_id": "1114010003",
+    "name": "Alur Tani I",
+    "status": "fully_isolated",
+    "isolated_population": 829,
+    "flooded_population": 0,
+    "priority_score": 0.6
+  },
+  {
+    "village_id": "1114011013",
+    "name": "Pengidam",
+    "status": "fully_isolated",
+    "isolated_population": 863,
+    "flooded_population": 0,
+    "priority_score": 0.6
+  },
+  {
+    "village_id": "1114011014",
+    "name": "Bengkelang",
+    "status": "fully_isolated",
+    "isolated_population": 680,
+    "flooded_population": 24,
+    "priority_score": 0.59
+  },
+  {
+    "village_id": "1114011015",
+    "name": "Batu Bedulang",
+    "status": "fully_isolated",
+    "isolated_population": 647,
+    "flooded_population": 0,
+    "priority_score": 0.59
+  },
+  {
+    "village_id": "1114021004",
+    "name": "Tebing Tinggi",
+    "status": "fully_isolated",
+    "isolated_population": 671,
+    "flooded_population": 53,
+    "priority_score": 0.59
+  },
+  {
+    "village_id": "1114071003",
+    "name": "Sulum",
+    "status": "fully_isolated",
+    "isolated_population": 575,
+    "flooded_population": 0,
+    "priority_score": 0.58
+  },
+  {
+    "village_id": "1114020018",
+    "name": "Pangkalan",
+    "status": "fully_isolated",
+    "isolated_population": 348,
+    "flooded_population": 55,
+    "priority_score": 0.57
+  },
+  {
+    "village_id": "1114050024",
+    "name": "Kw Pusung Kapal",
+    "status": "fully_isolated",
+    "isolated_population": 321,
+    "flooded_population": 42,
+    "priority_score": 0.57
+  },
+  {
+    "village_id": "1114071002",
+    "name": "Suka Makmur",
+    "status": "fully_isolated",
+    "isolated_population": 125,
+    "flooded_population": 0,
+    "priority_score": 0.56
+  },
+  {
+    "village_id": "1114071011",
+    "name": "Sekerak Kiri",
+    "status": "fully_isolated",
+    "isolated_population": 148,
+    "flooded_population": 0,
+    "priority_score": 0.56
+  },
+  {
+    "village_id": "1114071012",
+    "name": "Pantai Perlak",
+    "status": "fully_isolated",
+    "isolated_population": 222,
+    "flooded_population": 9,
+    "priority_score": 0.56
+  },
+  {
+    "village_id": "1114071001",
+    "name": "Baling Karang",
+    "status": "fully_isolated",
+    "isolated_population": 130,
+    "flooded_population": 0,
+    "priority_score": 0.55
+  },
+  {
+    "village_id": "1114020019",
+    "name": "Sungai Liput",
+    "status": "fully_isolated",
+    "isolated_population": 1858,
+    "flooded_population": 1012,
+    "priority_score": 0.54
+  },
+  {
+    "village_id": "1114021006",
+    "name": "Simpang Kiri",
+    "status": "fully_isolated",
+    "isolated_population": 1136,
+    "flooded_population": 321,
+    "priority_score": 0.53
+  },
+  {
+    "village_id": "1114020016",
+    "name": "Simpang Kanan",
+    "status": "fully_isolated",
+    "isolated_population": 388,
+    "flooded_population": 188,
+    "priority_score": 0.49
+  },
+  {
+    "village_id": "1114020020",
+    "name": "Bukit Rata",
     "status": "partially_isolated",
-    "isolated_population": 1860,
-    "flooded_population": 920,
-    "priority_score": 0.68
+    "isolated_population": 2505,
+    "flooded_population": 2045,
+    "priority_score": 0.45
   },
   {
-    "village_id": "1371010003",
-    "name": "Air Dingin",
-    "status": "reachable",
+    "village_id": "1114050023",
+    "name": "Kampung Baru",
+    "status": "fully_isolated",
+    "isolated_population": 160,
+    "flooded_population": 100,
+    "priority_score": 0.45
+  },
+  {
+    "village_id": "1114020009",
+    "name": "Seumadam",
+    "status": "partially_isolated",
+    "isolated_population": 1533,
+    "flooded_population": 915,
+    "priority_score": 0.43
+  },
+  {
+    "village_id": "1114010005",
+    "name": "Bandar Khalifah",
+    "status": "partially_isolated",
+    "isolated_population": 601,
+    "flooded_population": 121,
+    "priority_score": 0.4
+  },
+  {
+    "village_id": "1114020005",
+    "name": "Kebun Sungai Liput",
+    "status": "partially_isolated",
+    "isolated_population": 602,
+    "flooded_population": 155,
+    "priority_score": 0.35
+  },
+  {
+    "village_id": "1114020014",
+    "name": "Tanjung Genteng",
+    "status": "partially_isolated",
+    "isolated_population": 485,
+    "flooded_population": 10,
+    "priority_score": 0.33
+  },
+  {
+    "village_id": "1114030010",
+    "name": "Jamur Labu",
+    "status": "partially_isolated",
+    "isolated_population": 285,
+    "flooded_population": 70,
+    "priority_score": 0.33
+  },
+  {
+    "village_id": "1114060020",
+    "name": "Teluk Kemiri",
+    "status": "partially_isolated",
+    "isolated_population": 9,
+    "flooded_population": 0,
+    "priority_score": 0.32
+  },
+  {
+    "village_id": "1114010006",
+    "name": "Perk Pulau Tiga",
+    "status": "partially_isolated",
+    "isolated_population": 819,
+    "flooded_population": 179,
+    "priority_score": 0.29
+  },
+  {
+    "village_id": "1114020007",
+    "name": "Alur Selebu",
+    "status": "partially_isolated",
+    "isolated_population": 326,
+    "flooded_population": 2,
+    "priority_score": 0.29
+  },
+  {
+    "village_id": "1114071005",
+    "name": "Pematang Durian",
+    "status": "partially_isolated",
+    "isolated_population": 92,
+    "flooded_population": 0,
+    "priority_score": 0.29
+  },
+  {
+    "village_id": "1114011001",
+    "name": "Jambo Rambong",
+    "status": "partially_isolated",
+    "isolated_population": 281,
+    "flooded_population": 0,
+    "priority_score": 0.27
+  },
+  {
+    "village_id": "1114011012",
+    "name": "Pantai Cempa",
+    "status": "partially_isolated",
+    "isolated_population": 169,
+    "flooded_population": 0,
+    "priority_score": 0.27
+  },
+  {
+    "village_id": "1114050022",
+    "name": "Gelung",
+    "status": "partially_isolated",
+    "isolated_population": 193,
+    "flooded_population": 111,
+    "priority_score": 0.27
+  },
+  {
+    "village_id": "1114020008",
+    "name": "Suka Makmur",
+    "status": "partially_isolated",
+    "isolated_population": 275,
+    "flooded_population": 92,
+    "priority_score": 0.26
+  },
+  {
+    "village_id": "1114071006",
+    "name": "Sekumur",
+    "status": "partially_isolated",
+    "isolated_population": 123,
+    "flooded_population": 0,
+    "priority_score": 0.26
+  },
+  {
+    "village_id": "1114010001",
+    "name": "Kaloy",
+    "status": "partially_isolated",
+    "isolated_population": 544,
+    "flooded_population": 21,
+    "priority_score": 0.25
+  },
+  {
+    "village_id": "1114071007",
+    "name": "Tanjung Gelumpang",
+    "status": "partially_isolated",
+    "isolated_population": 95,
+    "flooded_population": 17,
+    "priority_score": 0.23
+  },
+  {
+    "village_id": "1114050017",
+    "name": "Tangsi Lama",
+    "status": "partially_isolated",
+    "isolated_population": 126,
+    "flooded_population": 84,
+    "priority_score": 0.22
+  },
+  {
+    "village_id": "1114060023",
+    "name": "Teluk Halban",
+    "status": "partially_isolated",
+    "isolated_population": 15,
+    "flooded_population": 32,
+    "priority_score": 0.21
+  },
+  {
+    "village_id": "1114070021",
+    "name": "Kebun Tanah Terban",
+    "status": "partially_isolated",
+    "isolated_population": 121,
+    "flooded_population": 105,
+    "priority_score": 0.2
+  },
+  {
+    "village_id": "1114070029",
+    "name": "Medang Ara",
+    "status": "partially_isolated",
+    "isolated_population": 75,
+    "flooded_population": 162,
+    "priority_score": 0.2
+  },
+  {
+    "village_id": "1114060022",
+    "name": "Teluk Kepayang",
+    "status": "partially_isolated",
     "isolated_population": 0,
-    "flooded_population": 430,
-    "priority_score": 0.31
+    "flooded_population": 0,
+    "priority_score": 0.08
   },
   {
-    "village_id": "1371010004",
-    "name": "Dadok Tunggul Hitam",
+    "village_id": "1114011005",
+    "name": "Alur Jambu",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.03
+  },
+  {
+    "village_id": "1114020010",
+    "name": "Karangjadi",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.03
+  },
+  {
+    "village_id": "1114020012",
+    "name": "Sidodadi",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.03
+  },
+  {
+    "village_id": "1114070022",
+    "name": "Tanah Terban",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 14,
+    "priority_score": 0.03
+  },
+  {
+    "village_id": "1114060021",
+    "name": "Mesjid Bdh",
+    "status": "partially_isolated",
+    "isolated_population": 3,
+    "flooded_population": 0,
+    "priority_score": 0.02
+  },
+  {
+    "village_id": "1114070024",
+    "name": "Gampong Johar",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 72,
+    "priority_score": 0.02
+  },
+  {
+    "village_id": "1114011002",
+    "name": "Blang Kandis",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.01
+  },
+  {
+    "village_id": "1114070028",
+    "name": "Pahlawan",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.01
+  },
+  {
+    "village_id": "1114010007",
+    "name": "Bandar Setia",
     "status": "reachable",
     "isolated_population": 0,
     "flooded_population": 0,
-    "priority_score": null
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114010008",
+    "name": "Harum Sari",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114010009",
+    "name": "Wono Sari",
+    "status": "reachable",
+    "isolated_population": 87,
+    "flooded_population": 69,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011003",
+    "name": "Perk Alur Jambu",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 3,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011004",
+    "name": "Aras Sembilan",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 3,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011006",
+    "name": "Batang Ara",
+    "status": "reachable",
+    "isolated_population": 11,
+    "flooded_population": 35,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011007",
+    "name": "Perupuk",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011008",
+    "name": "Serba",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 15,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011009",
+    "name": "Sunting",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011010",
+    "name": "Rantau Bintang",
+    "status": "reachable",
+    "isolated_population": 2,
+    "flooded_population": 3,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114011011",
+    "name": "Babo",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114020011",
+    "name": "Kampung Jawa",
+    "status": "reachable",
+    "isolated_population": 12,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114020013",
+    "name": "Purwodadi",
+    "status": "reachable",
+    "isolated_population": 158,
+    "flooded_population": 392,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114020015",
+    "name": "Gerenggam",
+    "status": "reachable",
+    "isolated_population": 1,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030001",
+    "name": "Ingin Jaya",
+    "status": "reachable",
+    "isolated_population": 12,
+    "flooded_population": 26,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030002",
+    "name": "Paya Bedi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030003",
+    "name": "Landuh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030004",
+    "name": "Benua Raja",
+    "status": "reachable",
+    "isolated_population": 13,
+    "flooded_population": 47,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030005",
+    "name": "Kampung Durian",
+    "status": "reachable",
+    "isolated_population": 52,
+    "flooded_population": 8,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030006",
+    "name": "Sukajadi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030007",
+    "name": "Suka Rahmat",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030008",
+    "name": "Suka Mulia",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030009",
+    "name": "Suka Rakyat",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030011",
+    "name": "Jamur Jelatang",
+    "status": "reachable",
+    "isolated_population": 108,
+    "flooded_population": 11,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030012",
+    "name": "Kamp Pertamina",
+    "status": "reachable",
+    "isolated_population": 20,
+    "flooded_population": 140,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030013",
+    "name": "Rantau Pauh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030014",
+    "name": "Alur Cucur",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030015",
+    "name": "Kebun Rantau",
+    "status": "reachable",
+    "isolated_population": 22,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114030016",
+    "name": "Alur Manis",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 2,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114040001",
+    "name": "Sriwijaya",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114040002",
+    "name": "Kota Kuala Simpang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114040003",
+    "name": "Perdamaian",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114040004",
+    "name": "Bukit Tempurung",
+    "status": "reachable",
+    "isolated_population": 8,
+    "flooded_population": 71,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114040005",
+    "name": "Kota Lintang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 95,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050001",
+    "name": "Sukaramai II",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050002",
+    "name": "Sukaramai I",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 2,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050003",
+    "name": "Perk Gedung Biara",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050004",
+    "name": "Air Masin",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050005",
+    "name": "Sidodadi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050006",
+    "name": "Tualang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050007",
+    "name": "Matang Sentang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050008",
+    "name": "Alur Alim",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050009",
+    "name": "Lubuk Damar",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050010",
+    "name": "Sei Kuruk III",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050011",
+    "name": "Sei Kuruk II",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050012",
+    "name": "Gedung Biara",
+    "status": "partially_isolated",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050013",
+    "name": "Perk Seuruway",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050014",
+    "name": "Padang Langgis",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050015",
+    "name": "Pantai Balai",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050016",
+    "name": "Binjai",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050018",
+    "name": "Peukan Seuruway",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 55,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050019",
+    "name": "Muka Sungai Kuruk",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 50,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050020",
+    "name": "Sungai Kuruk I",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 11,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114050021",
+    "name": "Paya Udang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060001",
+    "name": "Upah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060002",
+    "name": "Perkebunan Upah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060003",
+    "name": "Matang Teupah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060004",
+    "name": "Seuneubok Dalam Upah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060006",
+    "name": "Sukamulia Bd /S.Iyu",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060009",
+    "name": "Kebon Sungai Iyu",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060010",
+    "name": "Marlempang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060011",
+    "name": "Balai",
+    "status": "reachable",
+    "isolated_population": 4,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060012",
+    "name": "Lambung Blang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060013",
+    "name": "Lubuk Batil",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060014",
+    "name": "Tanjung Paret",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060015",
+    "name": "Seuneubok Dalam Mesjid",
+    "status": "reachable",
+    "isolated_population": 40,
+    "flooded_population": 2,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060016",
+    "name": "Rantau Pakam",
+    "status": "reachable",
+    "isolated_population": 9,
+    "flooded_population": 31,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060017",
+    "name": "Tumpok Teungah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060018",
+    "name": "Tanjung",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060019",
+    "name": "Tanjung Mulia",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060024",
+    "name": "Raja",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060025",
+    "name": "Cinta Raja",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 2,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060026",
+    "name": "Tanjung Binjai",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 262,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060027",
+    "name": "Kuala Peunaga",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060028",
+    "name": "Kuala Geunting",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060029",
+    "name": "Bandar Baru",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060030",
+    "name": "Mesjid S.Iyu",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060031",
+    "name": "Alur Cantik",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060032",
+    "name": "Tanjung Lipat I",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060034",
+    "name": "Bandar Khalifah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060035",
+    "name": "Seuneubok Aceh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060036",
+    "name": "Tanjung Lipat II",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114060037",
+    "name": "Tengku Tinggi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061001",
+    "name": "Sukajadi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061002",
+    "name": "Suka Damai",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061003",
+    "name": "Paya Rahat",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061004",
+    "name": "Suka Mulia/Upah Hulu",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061005",
+    "name": "Matang Seuping",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061006",
+    "name": "Gampong Besar",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061007",
+    "name": "Telaga Meuku II",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061008",
+    "name": "Telaga Meuku I",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061009",
+    "name": "Tanjung Keramat",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114061010",
+    "name": "Alur Nunang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070013",
+    "name": "Tanjung Karang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070015",
+    "name": "Menang Gini",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 46,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070016",
+    "name": "Kesehatan",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070017",
+    "name": "Gampong Sukajadi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 48,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070018",
+    "name": "Dalam",
+    "status": "reachable",
+    "isolated_population": 182,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070019",
+    "name": "Gampong Bundar",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070023",
+    "name": "Gampong Air Tenang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070025",
+    "name": "Gampong Tupah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 17,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070026",
+    "name": "Banai",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070027",
+    "name": "Rantau Panjang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070030",
+    "name": "Kebun Medang Ara",
+    "status": "reachable",
+    "isolated_population": 13,
+    "flooded_population": 48,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070031",
+    "name": "Kebun Seleleh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070032",
+    "name": "Alur Selalas",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070033",
+    "name": "Alur Baung",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070034",
+    "name": "Payameta",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070035",
+    "name": "Alur Bemban",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070036",
+    "name": "Tanjung Seumantoh",
+    "status": "reachable",
+    "isolated_population": 2,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070037",
+    "name": "Kebun Tanjung Seumantoh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070038",
+    "name": "Paya Tampah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070039",
+    "name": "Alur Lhok",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070040",
+    "name": "Buket Panjang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070041",
+    "name": "Sukajadi Paya Bujuk",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070042",
+    "name": "Simpang Empat",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 3,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070043",
+    "name": "Paya Awe",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070044",
+    "name": "Paya Kulbi",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114070045",
+    "name": "Buket Keranji",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114071004",
+    "name": "Juar",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114071008",
+    "name": "Lubuk Sidup",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114071009",
+    "name": "Sekerak Kanan",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114071010",
+    "name": "Bandar Mahligai",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114071013",
+    "name": "Pantai Tinjau",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114071014",
+    "name": "Kebun Batang Ara",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080001",
+    "name": "Krueng Sikajang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080002",
+    "name": "Seuneubok Punti",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080003",
+    "name": "Paya Ketenggar",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080004",
+    "name": "Buket Panjang II",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080005",
+    "name": "Buket Paya",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080006",
+    "name": "Bukit Panjang I",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080007",
+    "name": "Seuneubok Baru",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080008",
+    "name": "Benteng Anyer",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080009",
+    "name": "Matang Ara Jawa",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080010",
+    "name": "Matang Ara Aceh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080011",
+    "name": "Lhok Medang Ara",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080012",
+    "name": "Ie Bintah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080013",
+    "name": "Tualang Baru",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080014",
+    "name": "Pahlawan",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080015",
+    "name": "Gaseh Sayang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080016",
+    "name": "Sampaimah",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080017",
+    "name": "Gelanggang Merak",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080018",
+    "name": "Matang Cincin",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080019",
+    "name": "Alue Ie Puteh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080020",
+    "name": "Lueng Manyo",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080021",
+    "name": "Raja Tuha",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080022",
+    "name": "Seuneubok Pidie",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080023",
+    "name": "Geudham",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080024",
+    "name": "Alue Sentang",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080025",
+    "name": "Ujong Tanjong",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080026",
+    "name": "Tanjung Neraca",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080027",
+    "name": "Dagang Setia",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080028",
+    "name": "Simpang Lhee",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080029",
+    "name": "Seuneubok Cantek",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080030",
+    "name": "Mesjid",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080031",
+    "name": "Meunasah Paya",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080032",
+    "name": "Meurandeh",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080033",
+    "name": "Bandung Jaya",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080034",
+    "name": "Pandan Sari",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080035",
+    "name": "Paya Baru",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
+  },
+  {
+    "village_id": "1114080036",
+    "name": "Sapta Marga",
+    "status": "reachable",
+    "isolated_population": 0,
+    "flooded_population": 0,
+    "priority_score": 0.0
   }
 ]

@@ -1,13 +1,10 @@
 "use client";
 
 import { useEffect, useState, type ComponentType, type ReactNode } from "react";
+import { HttpNetworkFrame } from "msw/experimental";
 
 interface MswProviderProps {
   children: ReactNode;
-}
-
-interface UnhandledRequestPrint {
-  error: () => void;
 }
 
 // Tidak pernah aktif di production, walau flag-nya bocor
@@ -25,16 +22,13 @@ function startMsw(): Promise<ComponentType> {
   if (!g.__mswStart) {
     g.__mswStart = (async () => {
       const { worker } = await import("@/mocks/browser");
-      const startOptions = {
-        onUnhandledRequest(request: Request, print: UnhandledRequestPrint) {
-          const { pathname } = new URL(request.url);
-          if (!pathname.startsWith("/api")) return;
-          print.error(); // endpoint /api/* tanpa handler langsung ketahuan
+      await worker.start({
+        onUnhandledFrame({ frame, defaults }) {
+          if (!(frame instanceof HttpNetworkFrame)) return;
+          const { pathname } = new URL(frame.data.request.url);
+          if (pathname.startsWith("/api")) defaults.error(); // endpoint /api/* tanpa handler langsung ketahuan
         },
-      };
-      await worker.start(
-        startOptions as unknown as Parameters<typeof worker.start>[0],
-      );
+      });
       const panel = await import("@/mocks/scenario-panel");
       return panel.default;
     })();

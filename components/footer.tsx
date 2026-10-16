@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { Waves } from "lucide-react";
 
-export default function footer() {
+export function Footer() {
 
     return (
         <footer className="bg-[#071B30] text-white border-t border-white/10 pt-16 pb-12">

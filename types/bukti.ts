@@ -1,15 +1,3 @@
-// types.ts
-
-export interface VillageReplayValidation {
-  geom: number[][][][];
-  name: string;
-  elderly: number;
-  regency: string;
-  district: string;
-  population: number;
-  village_id: string;
-  children_under5: number;
-}
 export interface MetricsData {
   dataset: string;
   iou: number;

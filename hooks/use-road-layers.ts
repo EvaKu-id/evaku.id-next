@@ -1,8 +1,25 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { Map as MaplibreMap } from "maplibre-gl";
-import { SAMPLE_ROADS_GEOJSON } from "@/lib/data/sample-roads";
+import type {
+  FeatureIdentifier,
+  Map as MaplibreMap,
+  MapLayerMouseEvent,
+} from "maplibre-gl";
+import { ROAD_TILES, pmtilesUrl } from "@/lib/map-config";
+import { onStyleReady } from "@/lib/map-style";
+import {
+  ROAD_LINE_LAYER_IDS,
+  ROAD_TIERS,
+  roadColor,
+  roadCutId,
+  roadCutOpacity,
+  roadCutWidth,
+  roadLineId,
+  roadOpacity,
+  roadTierFilter,
+  roadWidth,
+} from "@/lib/road-style";
 import type { RoadStatus } from "@/lib/schemas/roads";
 
 export interface SelectedRoadInfo {
@@ -19,235 +36,145 @@ interface UseRoadLayersOptions {
   onSelectRoad?: (road: SelectedRoadInfo | null) => void;
 }
 
-export function useRoadLayers({
-  map,
-  roads,
-  onSelectRoad,
-}: UseRoadLayersOptions) {
+function roadFeature(id: number | string): FeatureIdentifier {
+  return { source: ROAD_TILES.source, sourceLayer: ROAD_TILES.sourceLayer, id };
+}
+
+// Minor roads first so major roads are drawn on top; dashes for cut roads go above all lines.
+const DRAW_ORDER = [...ROAD_TIERS].reverse();
+
+function addRoadLayers(map: MaplibreMap) {
+  if (!map.getSource(ROAD_TILES.source)) {
+    map.addSource(ROAD_TILES.source, {
+      type: "vector",
+      url: pmtilesUrl("jalan.pmtiles"),
+      promoteId: { [ROAD_TILES.sourceLayer]: "edge_id" },
+    });
+  }
+
+  for (const style of DRAW_ORDER) {
+    if (map.getLayer(roadLineId(style.tier))) continue;
+    map.addLayer({
+      id: roadLineId(style.tier),
+      type: "line",
+      source: ROAD_TILES.source,
+      "source-layer": ROAD_TILES.sourceLayer,
+      minzoom: style.minzoom,
+      filter: roadTierFilter(style),
+      layout: { "line-join": "round", "line-cap": "round" },
+      paint: {
+        "line-color": roadColor(),
+        "line-width": roadWidth(style),
+        "line-opacity": roadOpacity(),
+      },
+    });
+  }
+
+  for (const style of DRAW_ORDER) {
+    if (map.getLayer(roadCutId(style.tier))) continue;
+    map.addLayer({
+      id: roadCutId(style.tier),
+      type: "line",
+      source: ROAD_TILES.source,
+      "source-layer": ROAD_TILES.sourceLayer,
+      minzoom: style.minzoom,
+      filter: roadTierFilter(style),
+      layout: { "line-join": "round", "line-cap": "round" },
+      paint: {
+        "line-color": "#ffffff",
+        "line-width": roadCutWidth(style),
+        "line-dasharray": [2, 2],
+        "line-opacity": roadCutOpacity(),
+      },
+    });
+  }
+}
+
+function applyRoadStates(map: MaplibreMap, roads: readonly RoadStatus[]) {
+  if (!map.getSource(ROAD_TILES.source)) return;
+  // Only unsafe roads are listed, so stale states must be cleared first.
+  map.removeFeatureState({
+    source: ROAD_TILES.source,
+    sourceLayer: ROAD_TILES.sourceLayer,
+  });
+  for (const road of roads) {
+    map.setFeatureState(roadFeature(road.edge_id), {
+      status: road.status,
+      depth_cm: road.depth_cm ?? 0,
+    });
+  }
+}
+
+export function useRoadLayers({ map, roads, onSelectRoad }: UseRoadLayersOptions) {
   const hoveredIdRef = useRef<number | string | null>(null);
   const onSelectRoadRef = useRef(onSelectRoad);
+  const roadsRef = useRef<readonly RoadStatus[]>(roads ?? []);
 
   useEffect(() => {
     onSelectRoadRef.current = onSelectRoad;
   }, [onSelectRoad]);
 
-  // 1. Tambah source & layers ke peta MapLibre
   useEffect(() => {
     if (!map) return;
 
-    function addRoadLayers() {
+    const stopStyleListener = onStyleReady(map, () => {
+      addRoadLayers(map);
+      applyRoadStates(map, roadsRef.current);
+    });
+
+    function setHover(id: number | string | null) {
+      if (!map || hoveredIdRef.current === id) return;
+      if (hoveredIdRef.current !== null) {
+        map.setFeatureState(roadFeature(hoveredIdRef.current), { hover: false });
+      }
+      hoveredIdRef.current = id;
+      if (id !== null) map.setFeatureState(roadFeature(id), { hover: true });
+    }
+
+    function handleMove(e: MapLayerMouseEvent) {
+      const feature = e.features?.[0];
+      if (!map || !feature) return;
+      map.getCanvas().style.cursor = "pointer";
+      setHover(feature.id ?? null);
+    }
+
+    function handleLeave() {
       if (!map) return;
+      map.getCanvas().style.cursor = "";
+      setHover(null);
+    }
 
-      // Cek apakah source 'roads' sudah ada
-      if (!map.getSource("roads")) {
-        map.addSource("roads", {
-          type: "geojson",
-          data: SAMPLE_ROADS_GEOJSON as unknown as GeoJSON.GeoJSON,
-          promoteId: "edge_id",
-        });
-      }
+    function handleClick(e: MapLayerMouseEvent) {
+      const feature = e.features?.[0];
+      if (!map || !feature) return;
+      const edgeId = Number(feature.id ?? feature.properties?.edge_id);
+      const highway = feature.properties?.highway_type ?? "jalan";
+      const state = map.getFeatureState(roadFeature(edgeId));
 
-      // Casing / Bayangan garis jalan untuk kontras tinggi
-      if (!map.getLayer("roads-casing")) {
-        map.addLayer({
-          id: "roads-casing",
-          type: "line",
-          source: "roads",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#000000",
-            "line-width": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              9,
-              4,
-              12,
-              6,
-              15,
-              9,
-            ],
-            "line-opacity": 0.22,
-          },
-        });
-      }
-
-      // Garis utama dengan warna dari feature-state
-      // Palet ramah buta warna:
-      // 0 = Aman (#059669 - Emerald)
-      // 1 = Terbatas (#d97706 - Amber)
-      // 2 = Putus (#e11d48 - Rose/Red)
-      // 3 = Belum diketahui (#64748b - Slate)
-      if (!map.getLayer("roads-line")) {
-        map.addLayer({
-          id: "roads-line",
-          type: "line",
-          source: "roads",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": [
-              "case",
-              ["boolean", ["feature-state", "hover"], false],
-              "#0284c7", // Sky blue saat hover
-              [
-                "match",
-                ["to-number", ["feature-state", "status"]],
-                0,
-                "#059669",
-                1,
-                "#d97706",
-                2,
-                "#e11d48",
-                3,
-                "#64748b",
-                "#10b981", // Fallback default
-              ],
-            ],
-            "line-width": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              9,
-              ["case", ["boolean", ["feature-state", "hover"], false], 4.5, 3],
-              12,
-              ["case", ["boolean", ["feature-state", "hover"], false], 6, 4.5],
-              15,
-              ["case", ["boolean", ["feature-state", "hover"], false], 8, 6],
-            ],
-          },
-        });
-      }
-
-      // Garis putus-putus khusus untuk status Putus (status = 2)
-      // Membantu penderita buta warna mengenali status putus tanpa melihat warna
-      if (!map.getLayer("roads-cut-dash")) {
-        map.addLayer({
-          id: "roads-cut-dash",
-          type: "line",
-          source: "roads",
-          layout: {
-            "line-join": "round",
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ffffff",
-            "line-width": [
-              "interpolate",
-              ["linear"],
-              ["zoom"],
-              9,
-              1.5,
-              12,
-              2,
-              15,
-              3,
-            ],
-            "line-dasharray": [2, 2],
-            "line-opacity": [
-              "case",
-              ["==", ["to-number", ["feature-state", "status"]], 2],
-              0.95,
-              0,
-            ],
-          },
-        });
-      }
-
-      // Event listener: Hover
-      map.on("mousemove", "roads-line", (e) => {
-        if (!e.features || !e.features[0]) return;
-        map.getCanvas().style.cursor = "pointer";
-
-        const feature = e.features[0];
-        const id = feature.id ?? feature.properties?.edge_id;
-
-        if (hoveredIdRef.current !== id) {
-          if (hoveredIdRef.current !== null) {
-            map.setFeatureState(
-              { source: "roads", id: hoveredIdRef.current },
-              { hover: false }
-            );
-          }
-          if (id !== undefined) {
-            hoveredIdRef.current = id;
-            map.setFeatureState({ source: "roads", id }, { hover: true });
-          }
-        }
-      });
-
-      map.on("mouseleave", "roads-line", () => {
-        map.getCanvas().style.cursor = "";
-        if (hoveredIdRef.current !== null) {
-          map.setFeatureState(
-            { source: "roads", id: hoveredIdRef.current },
-            { hover: false }
-          );
-          hoveredIdRef.current = null;
-        }
-      });
-
-      // Event listener: Klik ruas untuk menampilkan detail
-      map.on("click", "roads-line", (e) => {
-        if (!e.features || !e.features[0]) return;
-        const feature = e.features[0];
-        const edgeId = Number(feature.id ?? feature.properties?.edge_id);
-        const name =
-          feature.properties?.name || `Ruas #${edgeId}`;
-        const state = map.getFeatureState({ source: "roads", id: edgeId });
-        const status = typeof state.status === "number" ? state.status : 0;
-        const depth_cm =
-          typeof state.depth_cm === "number" ? state.depth_cm : null;
-
-        onSelectRoadRef.current?.({
-          edge_id: edgeId,
-          name,
-          status,
-          depth_cm,
-          lngLat: [e.lngLat.lng, e.lngLat.lat],
-        });
+      onSelectRoadRef.current?.({
+        edge_id: edgeId,
+        name: `Ruas #${edgeId} (${highway})`,
+        status: typeof state.status === "number" ? state.status : 0,
+        depth_cm: typeof state.depth_cm === "number" ? state.depth_cm : null,
+        lngLat: [e.lngLat.lng, e.lngLat.lat],
       });
     }
 
-    if (map.isStyleLoaded()) {
-      addRoadLayers();
-    } else {
-      map.once("load", addRoadLayers);
-      map.once("styledata", addRoadLayers);
-    }
+    const subscriptions = [
+      map.on("mousemove", ROAD_LINE_LAYER_IDS, handleMove),
+      map.on("mouseleave", ROAD_LINE_LAYER_IDS, handleLeave),
+      map.on("click", ROAD_LINE_LAYER_IDS, handleClick),
+    ];
+
+    return () => {
+      stopStyleListener();
+      subscriptions.forEach((subscription) => subscription.unsubscribe());
+    };
   }, [map]);
 
-  // 2. Terapkan setFeatureState per edge_id secara dinamis saat data roads berubah
   useEffect(() => {
-    if (!map || !roads || roads.length === 0) return;
-
-    function applyRoadStates() {
-      if (!map || !map.getSource("roads")) return;
-
-      roads?.forEach((road) => {
-        try {
-          map.setFeatureState(
-            { source: "roads", id: road.edge_id },
-            {
-              status: road.status,
-              depth_cm: road.depth_cm ?? 0,
-            }
-          );
-        } catch {
-          // Abaikan jika source belum siap di frame ini
-        }
-      });
-    }
-
-    if (map.isStyleLoaded()) {
-      applyRoadStates();
-    } else {
-      map.once("styledata", applyRoadStates);
-    }
+    roadsRef.current = roads ?? [];
+    // Not gated on isStyleLoaded(): that stays false while tiles load, which would drop the update.
+    if (map) applyRoadStates(map, roadsRef.current);
   }, [map, roads]);
 }

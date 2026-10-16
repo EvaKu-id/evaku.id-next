@@ -45,7 +45,8 @@ const evacuations = [1, 2, 3].map((rank) => ({
 }));
 
 const villageDetails = {
-  ...villageStatus,
+  village_id: villageStatus.village_id,
+  name: villageStatus.name,
   district: "Kecamatan Contoh",
   regency: "Kabupaten Contoh",
   population: 100,
@@ -112,17 +113,16 @@ describe("response status desa", () => {
 });
 
 describe("response detail desa", () => {
-  it("memuat status, elderly, rincian skor, rute, dan tiga evakuasi bernama fasilitas", () => {
+  it("memuat elderly, rincian skor, rute, dan tiga evakuasi bernama fasilitas", () => {
     expect(villageDetailsSchema.parse(villageDetails)).toEqual(villageDetails);
   });
 
-  it("menerima kolom nullable dari desa dan status desa", () => {
+  it("menerima kolom nullable dari desa", () => {
     const details = {
       ...villageDetails,
       population: null,
       children_under5: null,
       elderly: null,
-      priority_score: null,
       score_breakdown: null,
       route: null,
       boat_point: null,
@@ -171,8 +171,8 @@ describe("response detail desa", () => {
     ).toBe(false);
   });
 
-  it("menolak detail tanpa status, elderly, nama fasilitas, atau evakuasi", () => {
-    for (const field of ["status", "elderly", "evacuations"]) {
+  it("menolak detail tanpa elderly, nama fasilitas, atau evakuasi", () => {
+    for (const field of ["elderly", "evacuations"]) {
       expect(
         villageDetailsSchema.safeParse({
           ...villageDetails,
