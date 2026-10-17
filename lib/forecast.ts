@@ -6,6 +6,8 @@ export const PROBABILITY_THRESHOLDS = { mid: 0.35, high: 0.7 } as const;
 
 export type ProbabilityClass = "low" | "mid" | "high";
 
+export const PROBABILITY_CLASSES: readonly ProbabilityClass[] = ["low", "mid", "high"];
+
 export function probabilityClass(probability: number): ProbabilityClass {
   if (probability >= PROBABILITY_THRESHOLDS.high) return "high";
   if (probability >= PROBABILITY_THRESHOLDS.mid) return "mid";

@@ -67,7 +67,7 @@ function addRoadLayers(map: MaplibreMap) {
 
   for (const style of DRAW_ORDER) {
     addOrderedLayer(map, {
-      id: roadLineId(style.tier) as OrderedLayerId,
+      id: roadLineId(style.tier),
       type: "line",
       source: ROAD_TILES.source,
       "source-layer": ROAD_TILES.sourceLayer,
@@ -84,7 +84,7 @@ function addRoadLayers(map: MaplibreMap) {
 
   for (const style of DRAW_ORDER) {
     addOrderedLayer(map, {
-      id: roadCutId(style.tier) as OrderedLayerId,
+      id: roadCutId(style.tier),
       type: "line",
       source: ROAD_TILES.source,
       "source-layer": ROAD_TILES.sourceLayer,
@@ -116,7 +116,7 @@ function applyRoadStates(map: MaplibreMap, roads: readonly RoadState[]) {
   }
 }
 
-const ALL_ROAD_LAYERS = ROAD_TIERS.flatMap(({ tier }) => [roadLineId(tier), roadCutId(tier)]) as OrderedLayerId[];
+const ALL_ROAD_LAYERS: OrderedLayerId[] = ROAD_TIERS.flatMap(({ tier }) => [roadLineId(tier), roadCutId(tier)]);
 
 export function useRoadLayers({ map, roads, visible = true, onSelectRoad }: UseRoadLayersOptions) {
   const visibleRef = useRef(visible);

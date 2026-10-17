@@ -11,6 +11,8 @@ export const ROAD_STATUS: Record<RoadStatusCode, { label: string; description: s
   3: { label: "Belum diketahui", description: "Tidak tercakup citra", color: PALETTE.statusUnknown, dashed: false },
 };
 
+export const ROAD_STATUS_CODES: readonly RoadStatusCode[] = [0, 1, 2, 3];
+
 export const VILLAGE_STATUS: Record<VillageStatus, { label: string; short: string; color: string }> = {
   reachable: { label: "Terjangkau", short: "Terjangkau", color: PALETTE.statusSafe },
   partially_isolated: { label: "Terisolasi sebagian", short: "Sebagian", color: PALETTE.statusLimited },

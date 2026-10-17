@@ -140,6 +140,16 @@ export function MapApp() {
       ? `Tinggi air ${formatDecimal(level)} m · ${vehicle === "car" ? "mobil" : "truk/4x4"}`
       : undefined;
 
+  const modeBadge = scene.manifest ? (
+    <ModeBadge
+      mode={modeLabel}
+      eventName={scene.manifest.event.name}
+      eventDate={scene.manifest.event.peak_date}
+      dataTime={dataTime}
+      detail={detail}
+    />
+  ) : null;
+
   const panel = national ? (
     <NationalPanel onOpenRegion={openRegion} />
   ) : desa && scene.runId !== undefined ? (
@@ -265,16 +275,7 @@ export function MapApp() {
 
         {!national && desktop ? (
           <div className="pointer-events-auto absolute left-3 top-16 w-72 rounded-[14px] border border-rule bg-surface p-3 shadow-float">
-            {scene.manifest ? (
-              <ModeBadge
-                mode={modeLabel}
-                eventName={scene.manifest.event.name}
-                eventDate={scene.manifest.event.peak_date}
-                dataTime={dataTime}
-                detail={detail}
-                className="mb-3 border-b border-rule pb-3"
-              />
-            ) : null}
+            {modeBadge ? <div className="mb-3 border-b border-rule pb-3">{modeBadge}</div> : null}
             {controls}
           </div>
         ) : null}
@@ -309,15 +310,9 @@ export function MapApp() {
         ) : null}
 
 
-        {!desktop && !national && scene.manifest ? (
+        {!desktop && !national && modeBadge ? (
           <div className="pointer-events-auto absolute inset-x-3 top-[6.5rem] rounded-[12px] border border-rule bg-surface px-3 py-2 shadow-float">
-            <ModeBadge
-              mode={modeLabel}
-              eventName={scene.manifest.event.name}
-              eventDate={scene.manifest.event.peak_date}
-              dataTime={dataTime}
-              detail={detail}
-            />
+            {modeBadge}
           </div>
         ) : null}
       </div>

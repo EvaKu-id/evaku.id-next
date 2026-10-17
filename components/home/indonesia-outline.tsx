@@ -4,31 +4,20 @@ import { useMemo } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useActiveRegions, useProvinces } from "@/hooks/use-data";
 import { INDONESIA_BOUNDS } from "@/lib/map-config";
+import { createProjector } from "@/lib/projection";
 
-const WIDTH = 1000;
+const PROJECTOR = createProjector(INDONESIA_BOUNDS, 1000);
 
-type Ring = number[][];
-
-function isRing(value: unknown): value is Ring {
-  return Array.isArray(value) && value.every((point) => Array.isArray(point) && typeof point[0] === "number");
-}
-
-function polygonsOf(geometry: { type: string; coordinates: unknown }): Ring[][] {
-  const coords = geometry.coordinates;
-  if (!Array.isArray(coords)) return [];
-  if (geometry.type === "Polygon") return [coords.filter(isRing)];
-  if (geometry.type === "MultiPolygon") return coords.filter(Array.isArray).map((poly: unknown[]) => poly.filter(isRing));
+function polygonsOf(geometry: GeoJSON.Geometry): GeoJSON.Position[][][] {
+  if (geometry.type === "Polygon") return [geometry.coordinates];
+  if (geometry.type === "MultiPolygon") return geometry.coordinates;
   return [];
 }
 
 export function IndonesiaOutline() {
   const provinces = useProvinces();
   const regions = useActiveRegions();
-  const [minLon, minLat, maxLon, maxLat] = INDONESIA_BOUNDS;
-  const k = Math.cos(((minLat + maxLat) / 2) * (Math.PI / 180));
-  const height = Math.round((WIDTH * (maxLat - minLat)) / ((maxLon - minLon) * k));
-  const x = (lon: number) => (((lon - minLon) * k) / ((maxLon - minLon) * k)) * WIDTH;
-  const y = (lat: number) => ((maxLat - lat) / (maxLat - minLat)) * height;
+  const { width, height, x, y } = PROJECTOR;
   const activeCodes = new Set((regions.data ?? []).map((region) => region.province_pcode));
 
   const paths = useMemo(
@@ -39,14 +28,12 @@ export function IndonesiaOutline() {
           .join("");
         return { d, pcode: String(feature.properties?.pcode ?? index) };
       }),
-    // Projection constants are fixed; recompute only when the data changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [provinces.data],
+    [provinces.data, x, y],
   );
 
   if (!provinces.data) return <Skeleton className="aspect-[2.4/1] w-full" />;
   return (
-    <svg viewBox={`0 0 ${WIDTH} ${height}`} className="w-full" role="img" aria-label="Peta 34 provinsi Indonesia dengan wilayah aktif EvaKu ditandai">
+    <svg viewBox={`0 0 ${width} ${height}`} className="w-full" role="img" aria-label="Peta 34 provinsi Indonesia dengan wilayah aktif EvaKu ditandai">
       {paths.map((path) => (
         <path
           key={path.pcode}

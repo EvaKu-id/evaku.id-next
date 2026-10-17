@@ -98,7 +98,7 @@ function addLayers(map: MaplibreMap) {
 
 function syncProvinces(map: MaplibreMap, data: ProvinceData) {
   addLayers(map);
-  if (data.provinces) map.getSource<GeoJSONSource>(SOURCE)?.setData(data.provinces as GeoJSON.FeatureCollection);
+  if (data.provinces) map.getSource<GeoJSONSource>(SOURCE)?.setData(data.provinces);
   map.getSource<GeoJSONSource>(ACTIVE_SOURCE)?.setData(activeCollection(data.activeRegions ?? []));
   if (data.floods) {
     const breaks = quantileBreaks(data.floods.provinces.map((p) => p.floods));

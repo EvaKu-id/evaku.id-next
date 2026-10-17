@@ -17,20 +17,13 @@ import { WeightsBar } from "@/components/about/weights-bar";
 import { Ornament } from "@/components/ui/ornament";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
+import { DATA_UPDATES as UPDATES } from "@/lib/content/about";
 import { DATA_SOURCES } from "@/lib/data-sources";
-import { PHOTO_CREDITS } from "@/lib/photo-credits";
 
 export const metadata: Metadata = {
   title: "Tentang",
   description: "Cara kerja EvaKu dan cara menghitung peluang banjir, status jalan, desa terisolasi, titik evakuasi, dan skor prioritas.",
 };
-
-const TEAM = [
-  ["Frontend", "Peta, halaman, dan pengalaman pengguna"],
-  ["Backend", "Database, API publik, dan infrastruktur"],
-  ["AI/ML", "Mesin akses, pipeline, dan layanan model"],
-  ["ML", "Model genangan, prakiraan, dan kalibrasi"],
-] as const;
 
 export default function AboutPage() {
   return (
@@ -145,12 +138,14 @@ export default function AboutPage() {
             </ul>
           </div>
           <div>
-            <SectionHeading label="Tim" title="Empat peran, satu platform" />
+            <SectionHeading label="Pembaruan data" title="Selalu mengikuti kondisi terbaru" />
             <dl className="mt-6 grid gap-3 sm:grid-cols-2">
-              {TEAM.map(([role, focus]) => (
-                <div key={role} className="rounded-[12px] border border-rule bg-surface p-4">
-                  <dt className="font-semibold text-ink">{role}</dt>
-                  <dd className="mt-1 text-sm text-ink-2">{focus}</dd>
+              {UPDATES.map(({ icon: Icon, when, what }) => (
+                <div key={when} className="rounded-[12px] border border-rule bg-surface p-4">
+                  <dt className="flex items-center gap-2 font-semibold text-ink">
+                    <Icon className="size-4 text-brand" aria-hidden /> {when}
+                  </dt>
+                  <dd className="mt-1 text-sm text-ink-2">{what}</dd>
                 </div>
               ))}
             </dl>

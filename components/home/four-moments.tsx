@@ -1,12 +1,5 @@
-import { CloudRain, LifeBuoy, Satellite, Truck } from "lucide-react";
 import { Reveal } from "@/components/ui/reveal";
-
-const MOMENTS = [
-  { when: "H−3", title: "Prakiraan", icon: CloudRain, body: "Desa diberi peluang banjir 24, 48, dan 72 jam. Posko tahu desa mana yang akan terputus dan kapan." },
-  { when: "H−1", title: "Evakuasi", icon: LifeBuoy, body: "Desa berpeluang tinggi mendapat tiga lokasi aman terdekat dan jam terakhir untuk berangkat." },
-  { when: "H", title: "Radar", icon: Satellite, body: "Citra Sentinel-1 memetakan genangan menembus awan. Status jalan dan desa diperbarui dari kondisi nyata." },
-  { when: "H+1", title: "Bantuan", icon: Truck, body: "Ruang komando mengurutkan desa prioritas dan memberi rute darat atau titik turun perahu." },
-] as const;
+import { MOMENTS } from "@/lib/content/home";
 
 export function FourMoments() {
   return (

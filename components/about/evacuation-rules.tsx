@@ -1,11 +1,4 @@
-const RULES = [
-  ["≥ L + 1 m", "HAND lokasi minimal satu meter di atas tinggi air prakiraan"],
-  ["72 jam", "Tidak tergenang pada horizon prakiraan mana pun"],
-  ["≤ 10 km", "Bisa dicapai lewat ruas yang tidak putus"],
-  ["4 km/jam", "Waktu jalan kaki; waktu kendaraan dari kecepatan ruas"],
-  ["3 lokasi", "Diurutkan dari waktu tempuh tercepat"],
-  ["Batas berangkat", "Horizon pertama saat rute ke lokasi itu terputus"],
-] as const;
+import { EVACUATION_RULES as RULES } from "@/lib/content/about";
 
 export function EvacuationRules() {
   return (

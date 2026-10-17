@@ -40,7 +40,7 @@ function syncFlood(map: MaplibreMap, { overlay, lowConfidence, visible }: FloodD
   if (!map.getSource(LOW_SOURCE)) {
     map.addSource(LOW_SOURCE, { type: "geojson", data: { type: "FeatureCollection", features: [] } });
   }
-  if (lowConfidence) map.getSource<GeoJSONSource>(LOW_SOURCE)?.setData(lowConfidence as GeoJSON.FeatureCollection);
+  if (lowConfidence) map.getSource<GeoJSONSource>(LOW_SOURCE)?.setData(lowConfidence);
   addOrderedLayer(map, {
     id: "low-confidence-fill",
     type: "line",

@@ -66,11 +66,11 @@ export const VILLAGE_STATUS_COLORS = {
 const CUT_DASH_RATIO = 0.4;
 const HOVER_EXTRA_PX = 1;
 
-export function roadLineId(tier: RoadTier): string {
+export function roadLineId(tier: RoadTier): `roads-${RoadTier}` {
   return `roads-${tier}`;
 }
 
-export function roadCutId(tier: RoadTier): string {
+export function roadCutId(tier: RoadTier): `roads-${RoadTier}-cut` {
   return `roads-${tier}-cut`;
 }
 

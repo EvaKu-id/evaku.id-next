@@ -166,6 +166,9 @@ export const villageFileSchema = z.object({
   runs: z.record(z.string(), villageRunSchema),
 });
 
+// The parts of a village file that do not depend on a run; parsing drops `runs`.
+export const villageStaticSchema = villageFileSchema.omit({ runs: true });
+
 export const simSummarySchema = z.object({
   affected_villages: z.number().int(),
   isolated_villages: z.number().int(),
@@ -282,15 +285,24 @@ export const hubsSchema = z.object({
   ),
 });
 
-export const featureCollectionSchema = z.object({
-  type: z.literal("FeatureCollection"),
-  features: z.array(
-    z.object({
-      type: z.literal("Feature"),
-      geometry: z.object({ type: z.string(), coordinates: z.unknown() }),
-      properties: z.record(z.string(), z.unknown()).nullable(),
-    }),
-  ),
+function isFeature(value: unknown): boolean {
+  return typeof value === "object" && value !== null && "type" in value && value.type === "Feature" && "geometry" in value;
+}
+
+function isFeatureCollection(value: unknown): value is GeoJSON.FeatureCollection {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    "type" in value &&
+    value.type === "FeatureCollection" &&
+    "features" in value &&
+    Array.isArray(value.features) &&
+    value.features.every(isFeature)
+  );
+}
+
+export const featureCollectionSchema = z.custom<GeoJSON.FeatureCollection>(isFeatureCollection, {
+  message: "Expected a GeoJSON FeatureCollection",
 });
 
 export const photoCreditSchema = z.object({

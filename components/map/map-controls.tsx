@@ -3,7 +3,7 @@
 import { Segmented, type SegmentedOption } from "@/components/ui/segmented";
 import { WaterGauge } from "@/components/map/water-gauge";
 import { formatDateShort, formatDecimal, formatWib } from "@/lib/format";
-import { HORIZONS } from "@/lib/forecast";
+import { HORIZONS, isHorizon } from "@/lib/forecast";
 import type { Horizon, Manifest, MapMode, Vehicle } from "@/types/data";
 
 export const MODE_OPTIONS: readonly SegmentedOption<MapMode>[] = [
@@ -65,7 +65,10 @@ export function ModeControls({
             label="Horizon prakiraan"
             value={`${horizon}`}
             options={HORIZON_OPTIONS}
-            onChange={(value) => onHorizon(Number(value) as Horizon)}
+            onChange={(value) => {
+              const next = Number(value);
+              if (isHorizon(next)) onHorizon(next);
+            }}
           />
           {forecast ? (
             <p className="mt-1.5 text-xs text-muted">

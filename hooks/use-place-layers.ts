@@ -28,8 +28,8 @@ const EMPTY: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: 
 function syncPlaces(map: MaplibreMap, { sites, hubs, visible }: PlaceData) {
   if (!map.getSource("evac-sites")) map.addSource("evac-sites", { type: "geojson", data: EMPTY });
   if (!map.getSource("hubs")) map.addSource("hubs", { type: "geojson", data: EMPTY });
-  if (sites) map.getSource<GeoJSONSource>("evac-sites")?.setData(sites as GeoJSON.FeatureCollection);
-  if (hubs) map.getSource<GeoJSONSource>("hubs")?.setData(hubs as GeoJSON.FeatureCollection);
+  if (sites) map.getSource<GeoJSONSource>("evac-sites")?.setData(sites);
+  if (hubs) map.getSource<GeoJSONSource>("hubs")?.setData(hubs);
 
   addOrderedLayer(map, {
     id: "evac-sites-circle",

@@ -2,14 +2,7 @@
 
 import { ChevronDown } from "lucide-react";
 import { Accordion } from "radix-ui";
-
-const ITEMS = [
-  ["Apakah EvaKu menggantikan peringatan BMKG atau BPBD?", "Tidak. EvaKu melengkapi peringatan resmi dengan informasi akses: jalan mana yang putus, desa mana yang terisolasi, dan ke mana warga bisa mengungsi. Keputusan evakuasi tetap mengikuti arahan BPBD."],
-  ["Seberapa sering data diperbarui?", "Prakiraan diperbarui setiap 6 jam. Peta genangan diperbarui setiap kali satelit Sentinel-1 melintas, biasanya setiap beberapa hari dan lebih sering saat kejadian besar."],
-  ["Bagaimana wilayah baru ditambahkan?", "Per kabupaten: jaringan jalan, batas desa, warga, dan HAND dibangun dari data terbuka, lalu sungai utamanya dikalibrasi dengan debit. Setelah itu wilayah tampil di peta nasional sebagai wilayah aktif."],
-  ["Apakah EvaKu bisa dipakai tanpa login?", "Bisa. Peta, detail desa, ruang komando, dan halaman bukti terbuka untuk umum. Pengaturan ambang dan bobot disimpan di perangkat masing-masing."],
-  ["Bagaimana warga menerima peringatan?", "Kepala desa atau warga berlangganan lewat bot Telegram dengan kode desa. Pesan dikirim saat desa berpeluang tinggi banjir atau diperkirakan terputus."],
-] as const;
+import { FAQ_ITEMS as ITEMS } from "@/lib/content/about";
 
 export function Faq() {
   return (

@@ -18,16 +18,10 @@ import {
   simRoutesSchema,
   simulationSchema,
   villageFileSchema,
+  villageStaticSchema,
 } from "@/lib/data/schemas";
 import { DataError } from "@/lib/data/fetch-json";
 import type { DataSource } from "@/lib/data/source";
-import type { VillageFile } from "@/types/data";
-
-function withoutRuns(file: VillageFile): Omit<VillageFile, "runs"> {
-  const copy: Partial<VillageFile> = { ...file };
-  delete copy.runs;
-  return copy as Omit<VillageFile, "runs">;
-}
 
 export const bundleSource: DataSource = {
   manifest: () => fetchJson(`${DATA_BASE}/manifest.json`, manifestSchema),
@@ -40,7 +34,7 @@ export const bundleSource: DataSource = {
     const file = await fetchJson(`${DATA_BASE}/villages/${villageId}.json`, villageFileSchema);
     const run = file.runs[runId];
     if (!run) throw new DataError("Data desa untuk waktu ini tidak ditemukan.", 404);
-    return { ...withoutRuns(file), run_id: runId, run };
+    return { ...villageStaticSchema.parse(file), run_id: runId, run };
   },
 
   async simulate({ waterLevelM, vehicle }, signal) {

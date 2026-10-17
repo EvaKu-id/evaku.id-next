@@ -1,60 +1,7 @@
 "use client";
 
-import { CloudRain, Database, Megaphone, Route, Satellite } from "lucide-react";
 import { Tabs } from "radix-ui";
-import type { ReactNode } from "react";
-
-interface Stage {
-  id: string;
-  title: string;
-  icon: ReactNode;
-  summary: string;
-  inputs: string[];
-  output: string;
-}
-
-const STAGES: readonly Stage[] = [
-  {
-    id: "data",
-    title: "Data dasar",
-    icon: <Database className="size-4" />,
-    summary: "Setiap wilayah dibangun sekali: jaringan jalan dan jembatan, batas desa, warga per desa, fasilitas, dan ketinggian medan di atas sungai terdekat (HAND).",
-    inputs: ["OpenStreetMap", "BPS / OCHA HDX", "WorldPop 2026", "Copernicus DEM"],
-    output: "Graf jalan, desa, dan HAND per ruas",
-  },
-  {
-    id: "forecast",
-    title: "Prakiraan",
-    icon: <CloudRain className="size-4" />,
-    summary: "Setiap 6 jam, prakiraan hujan dan debit sungai diubah menjadi peluang banjir per desa dan tinggi air sungai untuk 24, 48, dan 72 jam.",
-    inputs: ["GloFAS", "Open-Meteo", "LightGBM terkalibrasi"],
-    output: "Peluang per desa + tinggi air per horizon",
-  },
-  {
-    id: "radar",
-    title: "Radar",
-    icon: <Satellite className="size-4" />,
-    summary: "Saat satelit Sentinel-1 lewat, U-Net memetakan genangan menembus awan. Kedalaman dihitung dari HAND, air permanen dikecualikan.",
-    inputs: ["Sentinel-1 VV/VH", "U-Net ONNX", "JRC air permanen"],
-    output: "Peta genangan 3 kelas kedalaman",
-  },
-  {
-    id: "access",
-    title: "Mesin akses",
-    icon: <Route className="size-4" />,
-    summary: "Kedalaman di setiap ruas menentukan status jalan. Jarak tempuh dari posko dihitung ulang untuk mobil dan truk, lalu setiap desa diberi status, skor prioritas, rute, dan titik evakuasi.",
-    inputs: ["Status ruas", "14 posko logistik", "187 kandidat lokasi aman"],
-    output: "Status desa, ranking, rute, evakuasi",
-  },
-  {
-    id: "publish",
-    title: "Publikasi",
-    icon: <Megaphone className="size-4" />,
-    summary: "Hasil diperiksa lalu diterbitkan sekaligus ke peta, ruang komando, laporan situasi, dan peringatan Telegram untuk desa yang berlangganan.",
-    inputs: ["Peta", "Ruang komando", "Telegram"],
-    output: "Keputusan posko dan warga",
-  },
-];
+import { PIPELINE_STAGES as STAGES } from "@/lib/content/about";
 
 export function PipelineStepper() {
   return (
@@ -67,7 +14,7 @@ export function PipelineStepper() {
             className="flex shrink-0 items-center gap-3 rounded-[10px] border border-rule bg-surface px-3 py-2.5 text-left text-sm font-semibold text-ink-2 transition-colors hover:border-brand/40 data-[state=active]:border-brand data-[state=active]:bg-brand-soft data-[state=active]:text-ink"
           >
             <span className="font-data text-xs text-brand">{String(index + 1).padStart(2, "0")}</span>
-            {stage.icon}
+            <stage.icon className="size-4" aria-hidden />
             {stage.title}
           </Tabs.Trigger>
         ))}

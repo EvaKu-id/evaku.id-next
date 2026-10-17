@@ -1,13 +1,10 @@
 import type React from "react";
 import { RoadStatusSwatch } from "@/components/ui/status";
-import { PROBABILITY_LABELS, type ProbabilityClass } from "@/lib/forecast";
-import { FLOOD_CLASSES, PROBABILITY_COLORS, ROAD_STATUS, VILLAGE_STATUS } from "@/lib/status";
+import { PROBABILITY_CLASSES, PROBABILITY_LABELS } from "@/lib/forecast";
+import { FLOOD_CLASSES, PROBABILITY_COLORS, ROAD_STATUS, ROAD_STATUS_CODES, VILLAGE_STATUS } from "@/lib/status";
 import { PALETTE } from "@/lib/palette";
 import type { MapMode } from "@/types/data";
-import type { RoadStatusCode } from "@/lib/status";
 
-const ROAD_CODES: readonly RoadStatusCode[] = [0, 1, 2, 3];
-const PROB_CLASSES: readonly ProbabilityClass[] = ["low", "mid", "high"];
 
 function Swatch({ color, hatched = false }: { color: string; hatched?: boolean }) {
   return (
@@ -34,7 +31,7 @@ export function MapLegend({ mode }: { mode: MapMode }) {
         <section>
           <h3 className="label-data mb-1.5">Peluang banjir desa</h3>
           <ul className="space-y-1">
-            {PROB_CLASSES.map((cls) => (
+            {PROBABILITY_CLASSES.map((cls) => (
               <Row key={cls}>
                 <Swatch color={PROBABILITY_COLORS[cls]} />
                 {PROBABILITY_LABELS[cls]}
@@ -81,7 +78,7 @@ export function MapLegend({ mode }: { mode: MapMode }) {
       <section>
         <h3 className="label-data mb-1.5">Status jalan</h3>
         <ul className="space-y-1">
-          {ROAD_CODES.map((code) => (
+          {ROAD_STATUS_CODES.map((code) => (
             <Row key={code}>
               <RoadStatusSwatch status={code} />
               {ROAD_STATUS[code].label}

@@ -1,13 +1,8 @@
 import Link from "next/link";
-import { ArrowRight, ClipboardList, Truck, Users } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CreditedPhoto } from "@/components/ui/credited-photo";
+import { PERSONAS } from "@/lib/content/home";
 import { PHOTO_CREDITS } from "@/lib/photo-credits";
-
-const PERSONAS = [
-  { icon: ClipboardList, who: "Operator BPBD", need: "Melihat desa yang akan terputus, menjelaskan prioritas, dan menyusun rencana kontinjensi.", href: "/komando", page: "Ruang komando" },
-  { icon: Truck, who: "Koordinator logistik", need: "Tidak mengirim truk ke jalan yang putus; tahu rute darat dan titik turun perahu.", href: "/map?mode=radar", page: "Peta radar" },
-  { icon: Users, who: "Kepala desa dan warga", need: "Tahu lokasi aman terdekat dan jam terakhir berangkat sebelum jalan tertutup air.", href: "/map?mode=prakiraan&h=72", page: "Peta prakiraan" },
-] as const;
 
 export function Audience() {
   return (
