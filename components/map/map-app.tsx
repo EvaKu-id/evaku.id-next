@@ -9,6 +9,7 @@ import { MapLegend } from "@/components/map/map-legend";
 import { ModeBadge } from "@/components/map/mode-badge";
 import { MODE_OPTIONS, ModeControls } from "@/components/map/map-controls";
 import { NationalPanel } from "@/components/map/national-panel";
+import { PlacePopup } from "@/components/map/place-popup";
 import { RoadPopup } from "@/components/map/road-popup";
 import { RunSummaryStrip } from "@/components/map/run-summary-strip";
 import { VillageList } from "@/components/map/village-list";
@@ -23,6 +24,7 @@ import type { CameraTarget } from "@/hooks/use-map-camera";
 import { useMapParams } from "@/hooks/use-map-params";
 import { useMapScene } from "@/hooks/use-map-scene";
 import type { ProvinceHover } from "@/hooks/use-province-layers";
+import type { SelectedPlace } from "@/hooks/use-place-layers";
 import type { SelectedRoadInfo } from "@/hooks/use-road-layers";
 import {
   useActiveRegions,
@@ -46,6 +48,7 @@ export function MapApp() {
   const { mode, scope, horizon, date, level, vehicle, desa, layers } = params;
   const desktop = useMediaQuery("(min-width: 1024px)");
   const [road, setRoad] = useState<SelectedRoadInfo | null>(null);
+  const [place, setPlace] = useState<SelectedPlace | null>(null);
   const [hover, setHover] = useState<ProvinceHover | null>(null);
   const [snap, setSnap] = useState<number | string | null>(params.panel || desa ? SNAPS[1] : SNAPS[0]);
 
@@ -104,6 +107,33 @@ export function MapApp() {
   }, [setParams]);
 
   const modeLabel: MapMode = mode;
+  const roadPopup = useMemo(
+    () =>
+      road?.lngLat
+        ? {
+            lngLat: road.lngLat,
+            onClose: () => setRoad((current) => (current === road ? null : current)),
+            content: (
+              <RoadPopup
+                road={road}
+                sourceLabel={mode === "radar" ? "Radar Sentinel-1" : mode === "prakiraan" ? "Prakiraan" : "Simulasi"}
+                onClose={() => setRoad(null)}
+              />
+            ),
+          }
+        : null,
+    [road, mode],
+  );
+
+  const mapPopup = useMemo(() => {
+    if (place) {
+      // Selecting something else closes this popup after the new selection is set; keep that one.
+      const close = () => setPlace((current) => (current === place ? null : current));
+      return { lngLat: place.lngLat, onClose: close, content: <PlacePopup place={place} onClose={close} /> };
+    }
+    return roadPopup;
+  }, [place, roadPopup]);
+
   const dataTime = scene.runTime;
   const detail =
     mode === "simulasi"
@@ -192,8 +222,16 @@ export function MapApp() {
             onHover: setHover,
             onSelectRegion: openRegion,
           }}
-          onSelectRoad={setRoad}
+          onSelectRoad={(next) => {
+            setPlace(null);
+            setRoad(next);
+          }}
           onSelectVillage={selectVillage}
+          onSelectPlace={(next) => {
+            setRoad(null);
+            setPlace(next);
+          }}
+          popup={mapPopup}
           label="Peta EvaKu"
         />
 
@@ -270,15 +308,6 @@ export function MapApp() {
           </div>
         ) : null}
 
-        {road ? (
-          <div className="absolute bottom-24 left-3 z-10 lg:bottom-8">
-            <RoadPopup
-              road={road}
-              sourceLabel={mode === "radar" ? "Radar Sentinel-1" : mode === "prakiraan" ? "Prakiraan" : "Simulasi"}
-              onClose={() => setRoad(null)}
-            />
-          </div>
-        ) : null}
 
         {!desktop && !national && scene.manifest ? (
           <div className="pointer-events-auto absolute inset-x-3 top-[6.5rem] rounded-[12px] border border-rule bg-surface px-3 py-2 shadow-float">

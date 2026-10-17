@@ -2,7 +2,6 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 interface SectionHeadingProps {
-  index?: string;
   label: string;
   title: ReactNode;
   intro?: ReactNode;
@@ -12,7 +11,6 @@ interface SectionHeadingProps {
 }
 
 export function SectionHeading({
-  index,
   label,
   title,
   intro,
@@ -22,10 +20,7 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
-      <p className="label-data">
-        {index ? <span className="text-brand">{index} — </span> : null}
-        {label}
-      </p>
+      <p className="label-data">{label}</p>
       <Heading className={cn("mt-3 text-ink", Heading === "h1" ? "text-display" : "text-h2")}>
         {title}
       </Heading>

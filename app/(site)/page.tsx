@@ -21,7 +21,7 @@ export default function HomePage() {
 
       <Section tone="deep" id="fitur" bordered={false}>
         <SectionHeading
-          index="01"
+         
           label="Fitur"
           title="Semua yang dibutuhkan posko, di satu peta"
           intro="Setiap fitur memakai data wilayah aktif. Pilih kartu untuk langsung membukanya."
@@ -32,21 +32,21 @@ export default function HomePage() {
       </Section>
 
       <Section id="kronologi">
-        <SectionHeading index="02" label="Empat momen satu desa" title="Dari tiga hari sebelum banjir sampai bantuan tiba" />
+        <SectionHeading label="Empat momen satu desa" title="Dari tiga hari sebelum banjir sampai bantuan tiba" />
         <div className="mt-12">
           <FourMoments />
         </div>
       </Section>
 
       <Section tone="surface" id="untuk-siapa">
-        <SectionHeading index="03" label="Untuk siapa" title="Dibuat untuk orang yang mengambil keputusan di lapangan" />
+        <SectionHeading label="Untuk siapa" title="Dibuat untuk orang yang mengambil keputusan di lapangan" />
         <div className="mt-10">
           <Audience />
         </div>
       </Section>
 
       <Section id="cakupan">
-        <SectionHeading index="04" label="Cakupan" title="Platform nasional, dibangun wilayah demi wilayah" />
+        <SectionHeading label="Cakupan" title="Platform nasional, dibangun wilayah demi wilayah" />
         <div className="mt-10">
           <Coverage />
         </div>

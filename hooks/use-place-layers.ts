@@ -1,11 +1,21 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Popup, type GeoJSONSource, type Map as MaplibreMap, type MapLayerMouseEvent } from "maplibre-gl";
 import { useStyleSync } from "@/hooks/use-style-sync";
 import { addOrderedLayer, setLayersVisible } from "@/lib/map-order";
 import { PALETTE } from "@/lib/palette";
 import type { EvacuationSites, Hubs } from "@/types/data";
+
+export interface SelectedPlace {
+  kind: "site" | "hub";
+  id: number;
+  name: string;
+  type: string | null;
+  source: string | null;
+  handM: number | null;
+  lngLat: [number, number];
+}
 
 interface PlaceData {
   sites: EvacuationSites | null;
@@ -47,14 +57,37 @@ function syncPlaces(map: MaplibreMap, { sites, hubs, visible }: PlaceData) {
   setLayersVisible(map, ["evac-sites-circle", "hubs-circle"], visible);
 }
 
+function toPlace(kind: SelectedPlace["kind"], e: MapLayerMouseEvent): SelectedPlace | null {
+  const feature = e.features?.[0];
+  if (!feature || feature.geometry.type !== "Point") return null;
+  const props = feature.properties ?? {};
+  const [lon, lat] = feature.geometry.coordinates;
+  const hand = Number(props.hand_m);
+  return {
+    kind,
+    id: Number(kind === "hub" ? props.hub_id : props.facility_id),
+    name: String(props.name ?? ""),
+    type: props.type ? String(props.type) : null,
+    source: props.source ? String(props.source) : null,
+    handM: Number.isFinite(hand) && props.hand_m !== null ? hand : null,
+    lngLat: [lon, lat],
+  };
+}
+
 export function usePlaceLayers(
   map: MaplibreMap | null,
   sites: EvacuationSites | null,
   hubs: Hubs | null,
   visible: boolean,
+  onSelectPlace?: (place: SelectedPlace) => void,
 ) {
   const data = useMemo(() => ({ sites, hubs, visible }), [sites, hubs, visible]);
   useStyleSync(map, data, syncPlaces);
+  const onSelectRef = useRef(onSelectPlace);
+
+  useEffect(() => {
+    onSelectRef.current = onSelectPlace;
+  }, [onSelectPlace]);
 
   useEffect(() => {
     if (!map) return;
@@ -81,11 +114,22 @@ export function usePlaceLayers(
       popup.remove();
     }
 
+    function select(kind: SelectedPlace["kind"]) {
+      return (e: MapLayerMouseEvent) => {
+        const place = toPlace(kind, e);
+        if (!place) return;
+        popup.remove();
+        onSelectRef.current?.(place);
+      };
+    }
+
     const subscriptions = [
       map.on("mousemove", "evac-sites-circle", show("Kandidat lokasi evakuasi")),
       map.on("mouseleave", "evac-sites-circle", hide),
+      map.on("click", "evac-sites-circle", select("site")),
       map.on("mousemove", "hubs-circle", show("Posko logistik")),
       map.on("mouseleave", "hubs-circle", hide),
+      map.on("click", "hubs-circle", select("hub")),
     ];
     return () => {
       popup.remove();

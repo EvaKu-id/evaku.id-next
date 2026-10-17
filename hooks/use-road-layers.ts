@@ -2,14 +2,17 @@
 
 import { useEffect, useRef } from "react";
 import { PALETTE } from "@/lib/palette";
-import type {
-  FeatureIdentifier,
-  Map as MaplibreMap,
-  MapLayerMouseEvent,
+import {
+  Popup,
+  type FeatureIdentifier,
+  type Map as MaplibreMap,
+  type MapLayerMouseEvent,
 } from "maplibre-gl";
 import { ROAD_TILES, pmtilesUrl } from "@/lib/map-config";
 import { onStyleReady } from "@/lib/map-style";
 import { lineLengthM } from "@/lib/geo";
+import { pointUnderCursor } from "@/lib/map-hit";
+import { ROAD_STATUS, highwayLabel, isRoadStatusCode, type RoadStatusCode } from "@/lib/status";
 import { addOrderedLayer, setLayersVisible, type OrderedLayerId } from "@/lib/map-order";
 import {
   ROAD_LINE_LAYER_IDS,
@@ -143,22 +146,43 @@ export function useRoadLayers({ map, roads, visible = true, onSelectRoad }: UseR
       if (id !== null) map.setFeatureState(roadFeature(id), { hover: true });
     }
 
+    const tooltip = new Popup({ closeButton: false, closeOnClick: false, offset: 12, className: "evaku-tip" });
+
     function handleMove(e: MapLayerMouseEvent) {
       const feature = e.features?.[0];
       if (!map || !feature) return;
+      if (pointUnderCursor(map, e.point)) {
+        setHover(null);
+        tooltip.remove();
+        return;
+      }
       map.getCanvas().style.cursor = "pointer";
       setHover(feature.id ?? null);
+      const state = feature.id === undefined ? {} : map.getFeatureState(roadFeature(feature.id));
+      const raw: unknown = state.status;
+      const code: RoadStatusCode = typeof raw === "number" && isRoadStatusCode(raw) ? raw : 0;
+      const meta = ROAD_STATUS[code];
+      const depth = typeof state.depth_cm === "number" && state.depth_cm > 0 ? ` · ${Math.round(state.depth_cm)} cm` : "";
+      tooltip
+        .setLngLat(e.lngLat)
+        .setHTML(
+          `<div class="px-3 py-2 text-xs"><p class="label-data">${highwayLabel(String(feature.properties?.highway_type ?? ""))}</p>` +
+            `<p class="mt-0.5 flex items-center gap-1.5 font-semibold text-ink"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:${meta.color}"></span>${meta.label}<span class="font-normal text-muted">${meta.description}${depth}</span></p></div>`,
+        )
+        .addTo(map);
     }
 
     function handleLeave() {
       if (!map) return;
       map.getCanvas().style.cursor = "";
       setHover(null);
+      tooltip.remove();
     }
 
     function handleClick(e: MapLayerMouseEvent) {
       const feature = e.features?.[0];
-      if (!map || !feature) return;
+      if (!map || !feature || pointUnderCursor(map, e.point)) return;
+      tooltip.remove();
       const edgeId = Number(feature.id ?? feature.properties?.edge_id);
       const highway = String(feature.properties?.highway_type ?? "road");
       const state = map.getFeatureState(roadFeature(edgeId));
@@ -182,6 +206,7 @@ export function useRoadLayers({ map, roads, visible = true, onSelectRoad }: UseR
 
     return () => {
       stopStyleListener();
+      tooltip.remove();
       subscriptions.forEach((subscription) => subscription.unsubscribe());
     };
   }, [map]);

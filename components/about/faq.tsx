@@ -13,7 +13,7 @@ const ITEMS = [
 
 export function Faq() {
   return (
-    <Accordion.Root type="single" collapsible className="divide-y divide-rule rounded-[14px] border border-rule bg-surface">
+    <Accordion.Root type="single" collapsible defaultValue={ITEMS[0][0]} className="divide-y divide-rule rounded-[14px] border border-rule bg-surface">
       {ITEMS.map(([question, answer]) => (
         <Accordion.Item key={question} value={question}>
           <Accordion.Header>

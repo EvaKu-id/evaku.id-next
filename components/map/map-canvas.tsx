@@ -1,10 +1,13 @@
 "use client";
 
 import "maplibre-gl/dist/maplibre-gl.css";
+import type { ReactNode } from "react";
+import { createPortal } from "react-dom";
+import { usePortalPopup } from "@/hooks/use-portal-popup";
 import { useMapCamera, type CameraTarget } from "@/hooks/use-map-camera";
 import { useFloodLayer, type FloodOverlay } from "@/hooks/use-flood-layer";
 import { useMapLibre } from "@/hooks/use-maplibre";
-import { usePlaceLayers } from "@/hooks/use-place-layers";
+import { usePlaceLayers, type SelectedPlace } from "@/hooks/use-place-layers";
 import { useProvinceLayers, type ProvinceHover } from "@/hooks/use-province-layers";
 import { useRoadLayers, type SelectedRoadInfo } from "@/hooks/use-road-layers";
 import { useRouteLayer, type RouteOverlay } from "@/hooks/use-route-layer";
@@ -29,7 +32,14 @@ export interface NationalLayer {
   onSelectRegion?: (region: ActiveRegion) => void;
 }
 
+export interface MapPopup {
+  lngLat: [number, number];
+  content: ReactNode;
+  onClose: () => void;
+}
+
 export interface MapCanvasProps {
+  popup?: MapPopup | null;
   initialView?: MapViewState;
   initialBounds?: BBox;
   camera?: CameraTarget | null;
@@ -50,14 +60,18 @@ export interface MapCanvasProps {
   preserveDrawingBuffer?: boolean;
   onSelectRoad?: (road: SelectedRoadInfo | null) => void;
   onSelectVillage?: (villageId: string) => void;
+  onSelectPlace?: (place: SelectedPlace) => void;
   className?: string;
   label?: string;
 }
+
+function noop() {}
 
 const NO_ROUTE: RouteOverlay = { route: null, villageCenter: null, evacuations: null };
 const ALL_LAYERS: MapLayersVisibility = { roads: true, villages: true, flood: true, places: true, route: true };
 
 export default function MapCanvas({
+  popup = null,
   initialView,
   initialBounds,
   camera = null,
@@ -78,6 +92,7 @@ export default function MapCanvas({
   preserveDrawingBuffer = false,
   onSelectRoad,
   onSelectVillage,
+  onSelectPlace,
   className,
   label = "Peta interaktif",
 }: MapCanvasProps) {
@@ -110,16 +125,20 @@ export default function MapCanvas({
   useFloodLayer(map, flood, lowConfidence, visible.flood);
   useRoadLayers({ map, roads, visible: visible.roads, onSelectRoad });
   useRouteLayer(map, route, visible.route);
-  usePlaceLayers(map, sites, hubs, visible.places);
+  usePlaceLayers(map, sites, hubs, visible.places, onSelectPlace);
   useMapCamera(map, camera);
+  const popupNode = usePortalPopup(map, popup?.lngLat ?? null, popup?.onClose ?? noop);
 
   return (
-    <div
-      ref={containerRef}
-      role="region"
-      aria-label={label}
-      data-lenis-prevent
-      className={cn("size-full bg-surface-2", className)}
-    />
+    <>
+      <div
+        ref={containerRef}
+        role="region"
+        aria-label={label}
+        data-lenis-prevent
+        className={cn("size-full bg-surface-2", className)}
+      />
+      {popupNode && popup ? createPortal(popup.content, popupNode) : null}
+    </>
   );
 }

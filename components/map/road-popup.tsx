@@ -2,19 +2,8 @@ import { X } from "lucide-react";
 import type { SelectedRoadInfo } from "@/hooks/use-road-layers";
 import { RoadStatusLabel } from "@/components/ui/status";
 import { formatKm, formatNumber } from "@/lib/format";
-import { isRoadStatusCode } from "@/lib/status";
+import { highwayLabel, isRoadStatusCode } from "@/lib/status";
 
-const HIGHWAY_LABELS: Record<string, string> = {
-  motorway: "Jalan tol",
-  trunk: "Jalan nasional",
-  primary: "Jalan provinsi",
-  secondary: "Jalan kabupaten",
-  tertiary: "Jalan penghubung",
-  unclassified: "Jalan desa",
-  residential: "Jalan permukiman",
-  track: "Jalan tanah",
-  service: "Jalan akses",
-};
 
 interface RoadPopupProps {
   road: SelectedRoadInfo;
@@ -24,9 +13,9 @@ interface RoadPopupProps {
 
 export function RoadPopup({ road, sourceLabel, onClose }: RoadPopupProps) {
   const status = isRoadStatusCode(road.status) ? road.status : 0;
-  const kind = HIGHWAY_LABELS[road.highway_type] ?? "Jalan";
+  const kind = highwayLabel(road.highway_type);
   return (
-    <div className="w-72 rounded-[12px] border border-rule bg-surface p-3 shadow-float">
+    <div className="w-72 max-w-[calc(100vw-48px)] p-3">
       <div className="flex items-start justify-between gap-2">
         <div>
           <p className="label-data">Ruas {formatNumber(road.edge_id)}</p>

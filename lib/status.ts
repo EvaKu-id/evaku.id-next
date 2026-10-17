@@ -32,3 +32,19 @@ export const FLOOD_CLASSES = [
 export function isRoadStatusCode(value: number): value is RoadStatusCode {
   return value === 0 || value === 1 || value === 2 || value === 3;
 }
+
+const HIGHWAY_LABELS: Record<string, string> = {
+  motorway: "Jalan tol",
+  trunk: "Jalan nasional",
+  primary: "Jalan provinsi",
+  secondary: "Jalan kabupaten",
+  tertiary: "Jalan penghubung",
+  unclassified: "Jalan desa",
+  residential: "Jalan permukiman",
+  track: "Jalan tanah",
+  service: "Jalan akses",
+};
+
+export function highwayLabel(highwayType: string): string {
+  return HIGHWAY_LABELS[highwayType.replace(/_link$/, "")] ?? "Jalan";
+}

@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import type { FeatureIdentifier, Map as MaplibreMap, MapLayerMouseEvent } from "maplibre-gl";
 import { VILLAGE_TILES, pmtilesUrl } from "@/lib/map-config";
 import { addOrderedLayer, setLayersVisible } from "@/lib/map-order";
+import { POINT_LAYERS } from "@/lib/map-hit";
 import { onStyleReady } from "@/lib/map-style";
 import { PALETTE } from "@/lib/palette";
 import { villageFillColor, villageFillOpacity } from "@/lib/road-style";
@@ -20,14 +21,7 @@ interface UseVillageLayersOptions {
 const FILL_LAYER = "villages-fill";
 const LINE_LAYER = "villages-line";
 const SELECTED_LAYER = "villages-selected";
-const CLICK_BLOCKERS = [
-  "roads-major",
-  "roads-minor",
-  "roads-path",
-  "evac-sites-circle",
-  "hubs-circle",
-  "route-points",
-];
+const CLICK_BLOCKERS = ["roads-major", "roads-minor", "roads-path", ...POINT_LAYERS];
 
 function villageFeature(id: string): FeatureIdentifier {
   return { source: VILLAGE_TILES.source, sourceLayer: VILLAGE_TILES.sourceLayer, id };

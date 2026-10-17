@@ -80,7 +80,7 @@ export function BuktiContent() {
       <Section tone="surface">
         <div className="grid gap-12 lg:grid-cols-2">
           <Reveal>
-            <SectionHeading index="01" label="Genangan radar" title="U-Net membaca air dari citra Sentinel-1" intro="Model dilatih pada Sen1Floods11 berlabel manual dan diuji pada split uji yang tidak pernah dilihat saat pelatihan. Pembandingnya ambang Otsu, cara klasik memisahkan air dari daratan." />
+            <SectionHeading label="Genangan radar" title="U-Net membaca air dari citra Sentinel-1" intro="Model dilatih pada Sen1Floods11 berlabel manual dan diuji pada split uji yang tidak pernah dilihat saat pelatihan. Pembandingnya ambang Otsu, cara klasik memisahkan air dari daratan." />
             <div className="mt-8">
               <ComparisonBars
                 title="IoU kelas air (makin tinggi makin tepat)"
@@ -100,7 +100,7 @@ export function BuktiContent() {
             </div>
           </Reveal>
           <Reveal delay={0.05}>
-            <SectionHeading index="02" label="Prakiraan" title="Peluang banjir mengalahkan ambang hujan" intro="LightGBM memakai hujan, kelembapan tanah, debit sungai, dan topografi. Pembandingnya aturan sederhana: banjir jika hujan tiga hari melewati ambang terbaik." />
+            <SectionHeading label="Prakiraan" title="Peluang banjir mengalahkan ambang hujan" intro="LightGBM memakai hujan, kelembapan tanah, debit sungai, dan topografi. Pembandingnya aturan sederhana: banjir jika hujan tiga hari melewati ambang terbaik." />
             <div className="mt-8 space-y-8">
               <ComparisonBars
                 title="PR-AUC pada data uji"
@@ -116,7 +116,7 @@ export function BuktiContent() {
       </Section>
 
       <Section>
-        <SectionHeading index="03" label="Prediksi vs kenyataan" title="Tiga hari sebelum puncak, desa mana yang sudah ditandai?" />
+        <SectionHeading label="Prediksi vs kenyataan" title="Tiga hari sebelum puncak, desa mana yang sudah ditandai?" />
         <div className="mt-10">
           <ReplayMap />
         </div>
@@ -125,7 +125,7 @@ export function BuktiContent() {
       <Section tone="deep">
         <div className="grid grid-cols-1 [&>*]:min-w-0 gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div>
-            <SectionHeading index="04" label="Titik evakuasi dan rute" title="Lokasi yang direkomendasikan tetap aman" intro="Setiap kandidat lokasi evakuasi diperiksa terhadap genangan radar hari H, begitu juga rute menuju ke sana." />
+            <SectionHeading label="Titik evakuasi dan rute" title="Lokasi yang direkomendasikan tetap aman" intro="Setiap kandidat lokasi evakuasi diperiksa terhadap genangan radar hari H, begitu juga rute menuju ke sana." />
             <div className="mt-8 grid grid-cols-2 gap-4">
               <MetricCard label="Lokasi tidak tergenang" value={v("evacuation", "safe_site_rate")} format="percent" />
               <MetricCard label="Rute yang dijanjikan tetap terbuka" value={v("evacuation", "route_open_rate")} format="percent" comparison="Diperiksa pada puncak banjir" />
@@ -134,7 +134,7 @@ export function BuktiContent() {
             </div>
           </div>
           <div className="space-y-8 rounded-[14px] border border-rule bg-surface p-5">
-            <p className="label-data">05 — Mesin akses</p>
+            <p className="label-data">Mesin akses</p>
             <SimulationCurve measure="isolated_villages" title="Desa terisolasi total menurut tinggi air" markers={manifest.data?.forecast_runs} />
             <SimulationCurve measure="cut_road_km" title="Panjang jalan putus menurut tinggi air" />
             <dl className="grid grid-cols-3 gap-3 text-sm">
@@ -156,7 +156,7 @@ export function BuktiContent() {
       </Section>
 
       <Section tone="surface">
-        <SectionHeading index="06" label="Metodologi" title="Cara pengujian" />
+        <SectionHeading label="Metodologi" title="Cara pengujian" />
         <dl className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {[
             ["Pembagian waktu", "Model peluang dilatih sampai 2022, divalidasi 2023, dan diuji 2024–2025. Tidak ada pengacakan data antartahun."],
