@@ -10,7 +10,8 @@ export const DEFAULT_VIEW: MapViewState = {
 };
 
 // Tiles are served from public/ because r2.dev is blocked by some Indonesian ISPs.
-const MAP_TILES_BASE_URL = process.env.NEXT_PUBLIC_MAP_TILES_BASE_URL ?? "/map";
+const MAP_TILES_BASE_URL =
+  process.env.NEXT_PUBLIC_MAP_TILES_BASE_URL ?? "https://data.evaku.cloud/map";
 export const MAP_DATA_VERSION =
   process.env.NEXT_PUBLIC_MAP_DATA_VERSION ?? "2026-10-16.3";
 
